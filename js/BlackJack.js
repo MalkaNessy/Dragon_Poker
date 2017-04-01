@@ -1,15 +1,15 @@
 var score;
-
+var message;
 function setScore(newScore) {
 	score = newScore;
 	document.getElementById("innerScore").innerHTML = score+"";
 }
-
-setScore(50);
-
-function print(message) {
-  document.write(message);
+function setMessage(newMessage) {
+	message = newMessage;
+	document.getElementById("talk").innerHTML = message+"";
 }
+setScore(50);
+setMessage("hello");
 
 function getRandomInt(min,max) {
 	return Math.floor(Math.random()*(max-min+1))+min;
@@ -80,16 +80,20 @@ if (getSum(player)== 21){
 				player.splice(0,1);
 				console.log("player after deliting: " + player);
 				player.push(getCard());
-				alert ('После замены: ' + getStatus());
+					//alert ('После замены: ' + getStatus());
+					setMessage('После замены: ' + getStatus());
 				console.log ("getStatus: " + getStatus() + " player: " + player);
 			} else if (answer == '2'){
 				player.splice(1,1);
 				player.push(getCard());
-				alert ('После замены: ' + getStatus());
+					//alert ('После замены: ' + getStatus());
+					setMessage('После замены: ' + getStatus());
 			} else if (answer == '3'){
 				player.splice(2,1);
 				player.push(getCard());
-				alert ('После замены: ' + getStatus());}
+					//alert ('После замены: ' + getStatus());
+					setMessage('После замены: ' + getStatus());
+			}
 			
 			
 			
@@ -98,14 +102,16 @@ if (getSum(player)== 21){
 			// проверяем, нет ли перебора или выигрыша
 			sum=getSum(player);
 			if (sum>21){
-			setScore( score - 10 );	
-			alert ('Перебор!') + getStatus();
+				setScore( score - 10 );	
+				//alert ('Перебор!') + getStatus();
+				setMessage('Перебор! ' + getStatus());
 			
 			break;
 			} else if (sum == 21) {
 				setScore( score * 2 );
-			   alert ('Black Jack!' + getStatus());
-			   break;
+			    //alert ('Black Jack!' + getStatus());
+				setMessage('Black Jack!' + getStatus());
+			    break;
 			}
 			
 			
@@ -123,28 +129,33 @@ if (getSum(player)== 21){
 			
 			if (sumDealer == 21) {
 				setScore( score - score * 2 );
-				alert ('У дилера Блэк Джек! ' + getStatus());
+				//alert ('У дилера Блэк Джек! ' + getStatus());
+				setMessage('У дилера Блэк Джек! ' + getStatus());
 				
 			} else if (sumDealer > 21) {
 				setScore( score +10 );
-				alert ('У дилера перебор!' + getStatus());
+				//alert ('У дилера перебор!' + getStatus());
+				setMessage('У дилера перебор!' + getStatus());
 				
 			} else if (sumPlayer == sumDealer) {
 				
-				alert ('Ничья! ' + getStatus());
+				//alert ('Ничья! ' + getStatus());
+				setMessage('Ничья! ' + getStatus());
 			} else if (sumPlayer > sumDealer) {
 				setScore( score *1.5 );
-				alert ('Выигрыш! :) ' + getStatus());
+				//alert ('Выигрыш! :) ' + getStatus());
+				setMessage('Выигрыш! :) ' + getStatus());
 			} else {
 				setScore( score - 10 );
-				alert ('Проигрыш :( ' + getStatus());
+				//alert ('Проигрыш :( ' + getStatus());
+				setMessage('Проигрыш :( ' + getStatus());
 			}
 		
 		}
 				
 	}while (answer == '1') ;
 }
-alert ("Сумма очков игрока: " + getSum(player) + " Score: " + score); 
-
+//alert ("Сумма очков игрока: " + getSum(player) + " Score: " + score);
+setMessage("Сумма очков игрока: " + getSum(player) + " Score: " + score);
  
  
