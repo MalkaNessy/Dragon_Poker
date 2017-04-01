@@ -1,3 +1,15 @@
+var score;
+
+function setScore(newScore) {
+	score = newScore;
+	document.getElementById("innerScore").innerHTML = score+"";
+}
+
+setScore(50);
+
+function print(message) {
+  document.write(message);
+}
 
 function getRandomInt(min,max) {
 	return Math.floor(Math.random()*(max-min+1))+min;
@@ -43,7 +55,7 @@ function getSum(hand) {
 } 
  
 function getStatus() {
-	return 'Дилер: ' + dealer + ' Игрок: ' + player.join(' ');//
+	return 'Дилер: ' + dealer + ' Игрок: ' + player.join(' ') + ' Score: ' + score;//
 } 
  
  
@@ -55,7 +67,7 @@ var player = [getCard(), getCard(), getCard()];
 
 if (getSum(player)== 21){
 	alert ('Дьявольское везение! Black Jack на раздаче!')
-
+	setScore( score * 2 );
 } else {
 	var answer='';
 	do {
@@ -86,9 +98,12 @@ if (getSum(player)== 21){
 			// проверяем, нет ли перебора или выигрыша
 			sum=getSum(player);
 			if (sum>21){
+			setScore( score - 10 );	
 			alert ('Перебор!') + getStatus();
+			
 			break;
 			} else if (sum == 21) {
+				setScore( score * 2 );
 			   alert ('Black Jack!' + getStatus());
 			   break;
 			}
@@ -107,14 +122,21 @@ if (getSum(player)== 21){
 			var sumPlayer = getSum(player);
 			
 			if (sumDealer == 21) {
+				setScore( score - score * 2 );
 				alert ('У дилера Блэк Джек! ' + getStatus());
+				
 			} else if (sumDealer > 21) {
+				setScore( score +10 );
 				alert ('У дилера перебор!' + getStatus());
+				
 			} else if (sumPlayer == sumDealer) {
+				
 				alert ('Ничья! ' + getStatus());
 			} else if (sumPlayer > sumDealer) {
+				setScore( score *1.5 );
 				alert ('Выигрыш! :) ' + getStatus());
 			} else {
+				setScore( score - 10 );
 				alert ('Проигрыш :( ' + getStatus());
 			}
 		
@@ -122,7 +144,7 @@ if (getSum(player)== 21){
 				
 	}while (answer == '1') ;
 }
-alert ("Сумма очков игрока: " + getSum(player)); 
+alert ("Сумма очков игрока: " + getSum(player) + " Score: " + score); 
 
  
  

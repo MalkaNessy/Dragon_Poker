@@ -125,9 +125,26 @@ TABLE
 	padding: 15px;
 }
 
+#table {
+	padding: 5px;
+	max-width: 50%;
+	margin: 0 auto;
+	border: 13px solid #004800;
+}
+
+.score {
+	border: 13px solid #004800;
+	float: right;
+	width: 20%;
+	color: #f2e7bf;
+	padding: 7px;
+	font-size: 1em;
+	text-align: center;
+}
 .cards {
 	text-align: center;
-	margin-bottom: 15px;
+	margin-top: 0px;
+	margin-bottom: 0px;
 	    -webkit-padding-start: 0;
 }
 .cards li{
@@ -136,20 +153,17 @@ TABLE
 	
 }
 
-#talk{
+.talk{
 	background-color:#f2e7bf;
-	max-width: 50%;
 	margin: 0 auto;
+	margin-bottom: 0.7em;
 	color: #001a4c;
 	padding: 7px;
 	font-size: 1em;
 }
 .desk  {
 	max-width: 300px;
-	border: 13px solid #004800;
 	margin: 0 auto;
-	margin-top: 15px;
-/* text-align: center; */
 }
 
 
