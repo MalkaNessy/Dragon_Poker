@@ -14,9 +14,10 @@ setMessage("hello");
 function getRandomInt(min,max) {
 	return Math.floor(Math.random()*(max-min+1))+min;
 }
-
+var desk = [ ['6d', '6_d.jpg'], ['7d', '7_d.jpg'], ['8d', '8_d.jpg'], ['9d', '9_d.jpg'], ['A', 'ace_d.jpg'], ['J', 'j_d.jpg'], ['Q', 'q_d.jpg'], ['K', 'k_d.jpg']];
+//var cards1 = ['6', '7', '8', '9', 'J', 'Q', 'K', 'A'];
 function getCard() {
-	var cards = ['6', '7', '8', '9', 'J', 'Q', 'K', 'A'];
+	var cards = desk.slice(0);
 	return cards[getRandomInt(0, cards.length - 1)];
 }
  
@@ -25,11 +26,11 @@ function getSum(hand) {
 	//сначала считаем все карты, кроме тузов
 	for (var i=0; i<hand.length;i++) {
 		var card = hand[i];
-		if (card!='A') {
-			if (card=='J' || card == 'Q' || card == 'K') {
+		if (card[0]!='A') {
+			if (card[0]=='J' || card[0] == 'Q' || card[0] == 'K') {
 				sum=sum+10;			
 			} else {
-				sum=sum + parseInt(card);
+				sum=sum + parseInt(card[0]);
 				//alert ('numb card: '+ parseInt(card))
 			}
 			
@@ -40,7 +41,7 @@ function getSum(hand) {
 	// туз считается как 1, если текущая сумма меньше 21, если больше - то как 11	
 	for (var i=0; i<hand.length; i++) {
 		var card = hand[i];
-		if (card == 'A'){
+		if (card[0] == 'A'){
 			if (sum>10) {
 				sum = sum + 1;
 			} else {
@@ -55,13 +56,14 @@ function getSum(hand) {
 } 
  
 function getStatus() {
-	return 'Дилер: ' + dealer + ' Игрок: ' + player.join(' ') + ' Score: ' + score;//
+	return 'Дилер: ' + dealer + ' Игрок: ' + player + ' Score: ' + score;//.join(' ')
 } 
  
  
  
 var dealer = [getCard()];
 var player = [getCard(), getCard(), getCard()];
+console.log("player: " + player);
 
 
 
