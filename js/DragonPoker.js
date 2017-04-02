@@ -65,11 +65,6 @@ function getHand (){
 	console.log("getHand () start, player: " + player + "dealer: " + dealer);
 }
 
-function drawCard (id){
-	console.log("drawCard start: " );
-	var c = getCard();
-	setCard(c[0],id );
-}
 
 function drawHand (player){
 	console.log("getHand start: " + player);
@@ -107,21 +102,29 @@ function getSum(hand) {
 } 
 
 function changeCard(id) {
-			//answer = prompt(getStatus() + ' Какую? 1-левую, 2-среднюю, 3-правую')
-			if (id == '1'){
+			console.log ('changeCard start');
+			var last;
+			if (id == '1_card'){
 				player.splice(0,1);
 				player.push(getCard());
+				console.log ('player: ' + player);
+				last = player[player.length-1];
+				
+				console.log ('last: ' + last);
+				console.log ('id: ' + id);
+				
+				setCard(last,id );
 					//alert ('После замены: ' + getStatus());
 					setMessage('После замены: ' + getStatus());
 					document.getElementById("answer").innerHTML = '<button id="end" onclick="checkScore()">посчитать</button>';
 				console.log ("getStatus: " + getStatus() + " player: " + player);
-			} else if (id == '2'){
+			} else if (id == '2_card'){
 				player.splice(1,1);
 				player.push(getCard());
 					//alert ('После замены: ' + getStatus());
 					setMessage('После замены: ' + getStatus());
 					document.getElementById("answer").innerHTML = '<button id="end" onclick="checkScore()">посчитать</button>';
-			} else if (id == '3'){
+			} else if (id == '3_card'){
 				player.splice(2,1);
 				player.push(getCard());
 					//alert ('После замены: ' + getStatus());
