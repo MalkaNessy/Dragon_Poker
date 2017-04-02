@@ -27,10 +27,8 @@
 		</ul>
 	</header>
 	<div style="clear: both;"> </div>
-	<div class="table">
-	<div class="score" id="score">Score: <div class="innerScore" id="innerScore">
-	</div></br>
-	</div>
+<div class="table">
+	<div class="score" id="score">Score: <div class="innerScore" id="innerScore"></div></br></div>
 	<div class="table" id="table">
 	
 			<ul class="cards">
@@ -39,11 +37,20 @@
 					<li id="right_card"><img src="img/ace_d.jpg" alt="ad" ></li>
 			</ul>		
 			
-			<div id="talk" >Welkome to game! Click the desk to get your cards </div>		
+			<div id="dialog">
+				<div id="talk" > </div>
+				<div id="answer"><button id="y">Yes</button><button id="n">No</button> </div>
+			</div>
+			<!-- <input type="text" id="myInput" ><button onclick="dialog()"></button>   -->
+			
+
+
+
+			
 			<div id="desk" onclick="play()"><a href="#"><img src="img/desk.jpg" alt="Desk" ></a> </div>			
 		
 	</div>
-	</div>				
+ </div>				
 			
 	<footer><a href="#">&copy; 2017 Malka Korets </a>	 </footer>
  <script src="js/DragonPoker.js"> </script> 

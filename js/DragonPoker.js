@@ -7,7 +7,7 @@ var desk = [ ['6d', '6_d.jpg'], ['7d', '7_d.jpg'], ['8d', '8_d.jpg'], ['9d', '9_
 ['6c', '6_c.jpg'], ['7c', '7_c.jpg'], ['8c', '8_c.jpg'], ['9c', '9_c.jpg'], ['A', 'ace_c.jpg'], ['J', 'j_c.jpg'], ['Q', 'q_c.jpg'], ['K', 'k_c.jpg'],
 ['6s', '6_s.jpg'], ['7s', '7_s.jpg'], ['8s', '8_s.jpg'], ['9s', '9_s.jpg'], ['A', 'ace_s.jpg'], ['J', 'j_s.jpg'], ['Q', 'q_s.jpg'], ['K', 'k_s.jpg'],
 ];
-var cards = desk.slice(0);
+var cards;
 //var cards1 = ['6', '7', '8', '9', 'J', 'Q', 'K', 'A'];
 
 function setScore(newScore) {
@@ -26,20 +26,10 @@ function getRandomInt(min,max) {
 	return Math.floor(Math.random()*(max-min+1))+min;
 }
 
-/* function getCard() {
-	var cards = desk.slice(0);
-	return temp = cards[getRandomInt(0, cards.length - 1)];
-	
-	for (i=0; i<cards.length; i++){
-		if (temp == cards[i]) {
-			cards.slice(i,1);
-		}
-	}
-}
-  */
+
  function getCard() {
+	cards = desk.slice(0);
 	var temp = cards[getRandomInt(0, cards.length - 1)];
-	
 	for (i=0; i<cards.length; i++){
 		if (temp == cards[i]) {
 			cards.splice(i,1);
@@ -163,16 +153,24 @@ function checkScore (){
 		setMessage('Проигрыш :( ' + getStatus());
 	}
 }
+
+/* function input() {
+    var x = document.getElementById("myInput").value;
+    //document.getElementById("talk").innerHTML = "Вы ввели: " + x;
+} */
+
 				
 function play(){
 	getHand ();
 	drawHand (player);
 	if (getSum(player)== 21){
-		alert ('Дьявольское везение! Black Jack на раздаче!');
+		//alert ('Дьявольское везение! Black Jack на раздаче!');
+		setMessage('Дьявольское везение! Black Jack на раздаче! Чтобы сыграть еще раз, нажмите на колоду.');
 		setScore( score + 200 );
 	} else {
 		var answer='';
-		answer = prompt(getStatus() + ' Хотите заменить карту? 1 - да, другое - нет')
+		//answer = prompt(getStatus() + ' Хотите заменить карту? 1 - да, другое - нет')
+		setMessage(getStatus() + ' Хотите заменить карту? 1 - да, другое - нет');
 		//сдаем карту игроку либо прекращаем игру
 		if (answer == '1') {
 			changeCard();
