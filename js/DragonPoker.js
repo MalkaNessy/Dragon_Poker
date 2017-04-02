@@ -154,10 +154,6 @@ function checkScore (){
 	}
 }
 
-/* function input() {
-    var x = document.getElementById("myInput").value;
-    //document.getElementById("talk").innerHTML = "Вы ввели: " + x;
-} */
 
 				
 function play(){
@@ -168,19 +164,35 @@ function play(){
 		setMessage('Дьявольское везение! Black Jack на раздаче! Чтобы сыграть еще раз, нажмите на колоду.');
 		setScore( score + 200 );
 	} else {
-		var answer='';
 		//answer = prompt(getStatus() + ' Хотите заменить карту? 1 - да, другое - нет')
 		setMessage(getStatus() + ' Хотите заменить карту? 1 - да, другое - нет');
+		document.getElementById("answer").innerHTML = '<button id="yes" onclick="yes()">Yes</button><button id="no" onclick="no()">No</button> ';
+	}
+}		
+		
 		//сдаем карту игроку либо прекращаем игру
-		if (answer == '1') {
-			changeCard();
-		}
+	function yes(){
+		document.getElementById("answer").innerHTML = '';
+		changeCard();
 		//дилер берет третью карту
 		dealer.push(getCard());
 		//проверяем счет
 		checkScore();
 	}
-}	
+	
+	function no(){
+		document.getElementById("answer").innerHTML = '';
+		//дилер берет третью карту
+		dealer.push(getCard());
+		//проверяем счет
+		checkScore();
+	}	
+		
+		
+		
+		
+	
+	
 
 //alert (getStatus());
 //setMessage("Сумма очков игрока: " + getSum(player) + " Score: " + score);
