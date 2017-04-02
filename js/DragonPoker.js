@@ -2,7 +2,12 @@ var score;
 var message;
 var dealer;
 var player;
-var desk = [ ['6d', '6_d.jpg'], ['7d', '7_d.jpg'], ['8d', '8_d.jpg'], ['9d', '9_d.jpg'], ['A', 'ace_d.jpg'], ['J', 'j_d.jpg'], ['Q', 'q_d.jpg'], ['K', 'k_d.jpg']];
+var desk = [ ['6d', '6_d.jpg'], ['7d', '7_d.jpg'], ['8d', '8_d.jpg'], ['9d', '9_d.jpg'], ['A', 'ace_d.jpg'], ['J', 'j_d.jpg'], ['Q', 'q_d.jpg'], ['K', 'k_d.jpg'],
+['6h', '6_h.jpg'], ['7h', '7_h.jpg'], ['8h', '8_h.jpg'], ['9h', '9_h.jpg'], ['A', 'ace_h.jpg'], ['J', 'j_h.jpg'], ['Q', 'q_h.jpg'], ['K', 'k_h.jpg'],
+['6c', '6_c.jpg'], ['7c', '7_c.jpg'], ['8c', '8_c.jpg'], ['9c', '9_c.jpg'], ['A', 'ace_c.jpg'], ['J', 'j_c.jpg'], ['Q', 'q_c.jpg'], ['K', 'k_c.jpg'],
+['6s', '6_s.jpg'], ['7s', '7_s.jpg'], ['8s', '8_s.jpg'], ['9s', '9_s.jpg'], ['A', 'ace_s.jpg'], ['J', 'j_s.jpg'], ['Q', 'q_s.jpg'], ['K', 'k_s.jpg'],
+];
+var cards = desk.slice(0);
 //var cards1 = ['6', '7', '8', '9', 'J', 'Q', 'K', 'A'];
 
 function setScore(newScore) {
@@ -15,16 +20,33 @@ function setMessage(newMessage) {
 }
 
 setScore(50);
-setMessage("Hello, welkome to game! Click the desk to get your cards ");
+setMessage("Hello, wellkome to game! Click the desk to get your cards ");
 
 function getRandomInt(min,max) {
 	return Math.floor(Math.random()*(max-min+1))+min;
 }
 
-function getCard() {
+/* function getCard() {
 	var cards = desk.slice(0);
-	return cards[getRandomInt(0, cards.length - 1)];
+	return temp = cards[getRandomInt(0, cards.length - 1)];
+	
+	for (i=0; i<cards.length; i++){
+		if (temp == cards[i]) {
+			cards.slice(i,1);
+		}
+	}
 }
+  */
+ function getCard() {
+	var temp = cards[getRandomInt(0, cards.length - 1)];
+	
+	for (i=0; i<cards.length; i++){
+		if (temp == cards[i]) {
+			cards.splice(i,1);
+		}
+	} return temp;
+}
+ 
  
 function setCard (hand, div_id) {
 	console.log('setCard start');
@@ -85,26 +107,28 @@ function getSum(hand) {
 			}
 		}
 	}
-	// В случае двух тузов первый будет стоить 11, а второй - 1
 	return sum;
 } 
 
 function changeCard() {
 			answer = prompt(getStatus() + ' Какую? 1-левую, 2-среднюю, 3-правую')
 			if (answer == '1'){
-				console.log ("player before deliting: " + player);
+					console.log ("player before deliting: " + player);
 				player.splice(0,1);
-				console.log("player after deliting: " + player);
+					console.log("player after deliting: " + player);
 				player.push(getCard());
 					alert ('После замены: ' + getStatus());
 					setMessage('После замены: ' + getStatus());
 				console.log ("getStatus: " + getStatus() + " player: " + player);
 			} else if (answer == '2'){
+					console.log ("player before deliting: " + player);
 				player.splice(1,1);
+					console.log ("player before deliting: " + player);
 				player.push(getCard());
 					alert ('После замены: ' + getStatus());
 					setMessage('После замены: ' + getStatus());
 			} else if (answer == '3'){
+					console.log ("player before deliting: " + player);
 				player.splice(2,1);
 				player.push(getCard());
 					alert ('После замены: ' + getStatus());
@@ -120,22 +144,22 @@ function checkScore (){
 			
 	if (sumPlayer == 21) {
 		setScore( score + 100 );
-		alert ('У вас Black Jack!' + getStatus());
+		//alert ('У вас Black Jack!' + getStatus());
 		setMessage('У вас Black Jack!' + getStatus());
 	} else if (sumDealer == 21) {
 		setScore( score - 20 );
-		alert ('У дилера Блэк Джек! ' + getStatus());
+		//alert ('У дилера Блэк Джек! ' + getStatus());
 		setMessage('У дилера Блэк Джек! ' + getStatus());
 	} else if (sumPlayer == sumDealer) {
-		alert ('Ничья! ' + getStatus());
+		//alert ('Ничья! ' + getStatus());
 		setMessage('Ничья! ' + getStatus());
 	} else if (sumPlayer > sumDealer) {
 		setScore( score + 50 );
-		alert ('Выигрыш! :) ' + getStatus());
+		//alert ('Выигрыш! :) ' + getStatus());
 		setMessage('Выигрыш! :) ' + getStatus());
 	} else {
 		setScore( score -100 );
-		alert ('Проигрыш :( ' + getStatus());
+		//alert ('Проигрыш :( ' + getStatus());
 		setMessage('Проигрыш :( ' + getStatus());
 	}
 }
