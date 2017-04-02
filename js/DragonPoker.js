@@ -65,11 +65,17 @@ function getHand (){
 	console.log("getHand () start, player: " + player + "dealer: " + dealer);
 }
 
+function drawCard (id){
+	console.log("drawCard start: " );
+	var c = getCard();
+	setCard(c[0],id );
+}
+
 function drawHand (player){
 	console.log("getHand start: " + player);
-	setCard(player[0],"left_card" );
-	setCard(player[1],"center_card" );
-	setCard(player[2],"right_card" );
+	setCard(player[0],"1_card" );
+	setCard(player[1],"2_card" );
+	setCard(player[2],"3_card" );
 }
 
 function getSum(hand) {
@@ -100,34 +106,34 @@ function getSum(hand) {
 	return sum;
 } 
 
-function changeCard() {
-			answer = prompt(getStatus() + ' Какую? 1-левую, 2-среднюю, 3-правую')
-			if (answer == '1'){
-					console.log ("player before deliting: " + player);
+function changeCard(id) {
+			//answer = prompt(getStatus() + ' Какую? 1-левую, 2-среднюю, 3-правую')
+			if (id == '1'){
 				player.splice(0,1);
-					console.log("player after deliting: " + player);
 				player.push(getCard());
-					alert ('После замены: ' + getStatus());
+					//alert ('После замены: ' + getStatus());
 					setMessage('После замены: ' + getStatus());
+					document.getElementById("answer").innerHTML = '<button id="end" onclick="checkScore()">посчитать</button>';
 				console.log ("getStatus: " + getStatus() + " player: " + player);
-			} else if (answer == '2'){
-					console.log ("player before deliting: " + player);
+			} else if (id == '2'){
 				player.splice(1,1);
-					console.log ("player before deliting: " + player);
 				player.push(getCard());
-					alert ('После замены: ' + getStatus());
+					//alert ('После замены: ' + getStatus());
 					setMessage('После замены: ' + getStatus());
-			} else if (answer == '3'){
-					console.log ("player before deliting: " + player);
+					document.getElementById("answer").innerHTML = '<button id="end" onclick="checkScore()">посчитать</button>';
+			} else if (id == '3'){
 				player.splice(2,1);
 				player.push(getCard());
-					alert ('После замены: ' + getStatus());
+					//alert ('После замены: ' + getStatus());
 					setMessage('После замены: ' + getStatus());
+					document.getElementById("answer").innerHTML = '<button id="end" onclick="checkScore()">посчитать</button>';
 			}
 } //	changeCard end
 		
 		
 function checkScore (){
+	//удаляем кнопку
+	document.getElementById("answer").innerHTML = '';
 	//проверяем результат
 	var sumDealer = getSum(dealer);
 	var sumPlayer = getSum(player);
@@ -173,12 +179,12 @@ function play(){
 		//сдаем карту игроку либо прекращаем игру
 	function yes(){
 		document.getElementById("answer").innerHTML = '';
-		changeCard();
 		//дилер берет третью карту
 		dealer.push(getCard());
-		//проверяем счет
-		checkScore();
+		setMessage('Нажмите на карту, которую хотите заменить');
 	}
+	
+	
 	
 	function no(){
 		document.getElementById("answer").innerHTML = '';
