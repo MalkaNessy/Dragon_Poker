@@ -133,7 +133,7 @@ TABLE
 }
 
 .score {
-	border: 13px solid #004800;
+	/* border: 13px solid #004800; */
 	float: right;
 	width: 20%;
 	color: #f2e7bf;

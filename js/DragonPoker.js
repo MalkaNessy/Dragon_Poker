@@ -34,7 +34,17 @@ function setCard (hand, div_id) {
 }
   
 function getStatus() {
-	return 'Дилер: ' + dealer + ' Игрок: ' + player + ' Score: ' + score;//.join(' ')
+	var dlr = [];
+	var plr = [];
+	for (i=0; i<dealer.length; i++){
+		dlr.push(dealer[i][0]);
+	}
+	for (i=0; i<player.length; i++){
+		plr.push(player[i][0]);
+	}
+	console.log ("dlr: " + dlr + ' ' + "plr: " + plr );
+	return 'Дилер: ' + dlr.join(' ') + ' Игрок: ' + plr.join(' ') + ' Score: ' + score;//.join(' ')
+	
 } 
  
 function getHand (){
@@ -150,7 +160,7 @@ function play(){
 	}
 }	
 
-//alert ("Сумма очков игрока: " + getSum(player) + " Score: " + score);
+//alert (getStatus());
 //setMessage("Сумма очков игрока: " + getSum(player) + " Score: " + score);
  
  
