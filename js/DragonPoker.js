@@ -39,9 +39,27 @@ function getRandomInt(min,max) {
 }
  
  
+ /* test
+ 
+ 
+ function getCard() {
+	var temp = desk[getRandomInt(0, desk.length - 1)];
+	for (i=0; i<desk.length; i++){
+		if (temp == desk[i]) {
+			desk.splice(i,1);
+		}
+	} return temp;
+};
+
+function change(index) {
+	return desk[index] = getCard();
+}
+*/
+ 
+ 
 function setCard (oneCard, div_id) {
 	console.log('setCard start, берем карту, вынимаем ее [1] элемент (название картинки) и вставляем в див с div_id');
-	card = oneCard[1];
+	var card = oneCard[1];
 	document.getElementById(div_id).innerHTML = '<img src="img/'+card+'" alt="2d" >';
 	console.log('setCard end, card: ' + card);
 }
@@ -103,19 +121,25 @@ function getSum(hand) {
 } 
 
 function changeCard(index ,id) {
-	player.splice(index,1);
-	player.unshift(getCard());
-	setCard (player[index], id);
+		console.log('ChangeCard start - index: ' + index + ' id:' + id);
+	player[index]= getCard();
+	console.log('ChangeCard - new player: ' + player);
+	setCard(player[index], id);
+	
+	console.log('changeCard end - player[index]: ' + player[index]+' player: '+ player);
 }
 
 function toChangeCard (id){
 	if (id == '1_card'){
+		console.log('toChangeCard id' + id);
 		var index = 0;
 		changeCard(index, id);
 	}else if (id == '2_card'){
+		console.log('toChangeCard id' + id);
 		var index = 1;
 		changeCard(index, id);
 	}else if (id == '3_card'){
+		console.log('toChangeCard id' + id);
 		var index = 2;
 		changeCard(index, id);
 	}else {
