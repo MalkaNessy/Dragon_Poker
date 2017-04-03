@@ -20,7 +20,7 @@ function setMessage(newMessage) {
 }
 
 setScore(50);
-setMessage("Hello, wellkome to game! Click the desk to get your cards ");
+setMessage("Hello, wellcome to game!</br>Click the deck to get your cards ");
 
 function getRandomInt(min,max) {
 	return Math.floor(Math.random()*(max-min+1))+min;
@@ -38,23 +38,6 @@ function getRandomInt(min,max) {
 	} return temp;
 }
  
- 
- /* test
- 
- 
- function getCard() {
-	var temp = desk[getRandomInt(0, desk.length - 1)];
-	for (i=0; i<desk.length; i++){
-		if (temp == desk[i]) {
-			desk.splice(i,1);
-		}
-	} return temp;
-};
-
-function change(index) {
-	return desk[index] = getCard();
-}
-*/
  
  
 function setCard (oneCard, div_id) {
@@ -74,8 +57,8 @@ function getStatus() {
 		plr.push(player[i][0]);
 	}
 	console.log ("getStatus() dlr: " + dlr + ' ' + "plr: " + plr );
-	return 'Дилер: ' + dlr.join(' ') + ' Игрок: ' + plr.join(' ') + ' Score: ' + score;//.join(' ')
-	
+	return 'Dealer has: ' + dlr.join(' ');
+	 //+ ' Игрок: ' + plr.join(' ') + ' Score: ' + score;
 } 
  
 function getHand (){
@@ -125,8 +108,11 @@ function changeCard(index ,id) {
 	player[index]= getCard();
 	console.log('ChangeCard - new player: ' + player);
 	setCard(player[index], id);
-	
+	setMessage('Ok, you changed your card. ' + getStatus());
+	document.getElementById("answer").innerHTML = '<button id="end" onclick="checkScore()">to score</button>';
+				
 	console.log('changeCard end - player[index]: ' + player[index]+' player: '+ player);
+	
 }
 
 function toChangeCard (id){
@@ -143,43 +129,12 @@ function toChangeCard (id){
 		var index = 2;
 		changeCard(index, id);
 	}else {
-		setMessage("упс, проверить html, такого id_дива нет");
+		setMessage("there is no such div_id in html");
 	}
 }
 
 
-/* 
-function changeCard(id) {
-			console.log ('changeCard start');
-			var last;
-			if (id == '1_card'){
-				player.splice(0,1);
-				player.unshift(getCard());
-				setCard (player[0], id);
-					//alert ('После замены: ' + getStatus());
-					setMessage('После замены: ' + getStatus());
-					document.getElementById("answer").innerHTML = '<button id="end" onclick="checkScore()">посчитать</button>';
-				console.log ("После замены карты 1 - player: " + player );
-			} else if (id == '2_card'){
-				player.splice(1,1);
-				player.push(getCard());
-					//alert ('После замены: ' + getStatus());
-					setMessage('После замены: ' + getStatus());
-					document.getElementById("answer").innerHTML = '<button id="end" onclick="checkScore()">посчитать</button>';
-					console.log ("После замены карты 2 - getStatus: " + getStatus() + " player: " + player);
-			
-			} else if (id == '3_card'){
-				player.splice(2,1);
-				player.push(getCard());
-					//alert ('После замены: ' + getStatus());
-					setMessage('После замены: ' + getStatus());
-					document.getElementById("answer").innerHTML = '<button id="end" onclick="checkScore()">посчитать</button>';
-					console.log ("После замены карты 3 - getStatus: " + getStatus() + " player: " + player);
-			
-	//	changeCard end		}
-}  */
-		
-		
+	
 function checkScore (){
 	//удаляем кнопку
 	document.getElementById("answer").innerHTML = '';
@@ -190,22 +145,22 @@ function checkScore (){
 	if (sumPlayer == 21) {
 		setScore( score + 100 );
 		//alert ('У вас Black Jack!' + getStatus());
-		setMessage('У вас Black Jack!' + getStatus());
+		setMessage('You has Black Jack!' + getStatus());
 	} else if (sumDealer == 21) {
 		setScore( score - 20 );
 		//alert ('У дилера Блэк Джек! ' + getStatus());
-		setMessage('У дилера Блэк Джек! ' + getStatus());
+		setMessage('Dealer has Black Jack! ' + getStatus());
 	} else if (sumPlayer == sumDealer) {
 		//alert ('Ничья! ' + getStatus());
-		setMessage('Ничья! ' + getStatus());
+		setMessage('Dead heat! ' + getStatus());
 	} else if (sumPlayer > sumDealer) {
 		setScore( score + 50 );
 		//alert ('Выигрыш! :) ' + getStatus());
-		setMessage('Выигрыш! :) ' + getStatus());
+		setMessage('You win! :) ' + getStatus());
 	} else {
 		setScore( score -100 );
 		//alert ('Проигрыш :( ' + getStatus());
-		setMessage('Проигрыш :( ' + getStatus());
+		setMessage('You loos :( ' + getStatus());
 	}
 	console.log ("После подсчета очков - getStatus: " + getStatus() + " player: " + player);
 			
@@ -219,11 +174,10 @@ function play(){
 	drawHand (player);
 	if (getSum(player)== 21){
 		//alert ('Дьявольское везение! Black Jack на раздаче!');
-		setMessage('Дьявольское везение! Black Jack на раздаче! Чтобы сыграть еще раз, нажмите на колоду.');
+		setMessage("You're lucky! Black Jack!.. </br> To play again ckick on card deck.");
 		setScore( score + 200 );
 	} else {
-		//answer = prompt(getStatus() + ' Хотите заменить карту? 1 - да, другое - нет')
-		setMessage(getStatus() + ' Хотите заменить карту? 1 - да, другое - нет');
+		setMessage(getStatus() +  " He will get one more directly.</br>Do you want to change one of you're cards?");
 		document.getElementById("answer").innerHTML = '<button id="yes" onclick="yes()">Yes</button><button id="no" onclick="no()">No</button> ';
 	}
 	console.log('play() end');
@@ -235,7 +189,7 @@ function play(){
 		document.getElementById("answer").innerHTML = '';
 		//дилер берет третью карту
 		dealer.push(getCard());
-		setMessage('Нажмите на карту, которую хотите заменить');
+		setMessage(getStatus() +  '</br>Please click the card you want to change');
 		console.log('yes() end = dealer: ' + dealer );
 	}
 	
