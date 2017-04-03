@@ -2,10 +2,10 @@ var score;
 var message;
 var dealer;
 var player;
-var desk = [ ['6d', '6_d.jpg'], ['7d', '7_d.jpg'], ['8d', '8_d.jpg'], ['9d', '9_d.jpg'], ['A', 'ace_d.jpg'], ['J', 'j_d.jpg'], ['Q', 'q_d.jpg'], ['K', 'k_d.jpg'],
-['6h', '6_h.jpg'], ['7h', '7_h.jpg'], ['8h', '8_h.jpg'], ['9h', '9_h.jpg'], ['A', 'ace_h.jpg'], ['J', 'j_h.jpg'], ['Q', 'q_h.jpg'], ['K', 'k_h.jpg'],
-['6c', '6_c.jpg'], ['7c', '7_c.jpg'], ['8c', '8_c.jpg'], ['9c', '9_c.jpg'], ['A', 'ace_c.jpg'], ['J', 'j_c.jpg'], ['Q', 'q_c.jpg'], ['K', 'k_c.jpg'],
-['6s', '6_s.jpg'], ['7s', '7_s.jpg'], ['8s', '8_s.jpg'], ['9s', '9_s.jpg'], ['A', 'ace_s.jpg'], ['J', 'j_s.jpg'], ['Q', 'q_s.jpg'], ['K', 'k_s.jpg'],
+var desk = [ ['6d', '6_d.jpg'], ['7d', '7_d.jpg'], ['8d', '8_d.jpg'], ['9d', '9_d.jpg'], ['A_d', 'ace_d.jpg'], ['J_d', 'j_d.jpg'], ['Q_d', 'q_d.jpg'], ['K_d', 'k_d.jpg'],
+['6h', '6_h.jpg'], ['7h', '7_h.jpg'], ['8h', '8_h.jpg'], ['9h', '9_h.jpg'], ['A_h', 'ace_h.jpg'], ['J_h', 'j_h.jpg'], ['Q_h', 'q_h.jpg'], ['K_h', 'k_h.jpg'],
+['6c', '6_c.jpg'], ['7c', '7_c.jpg'], ['8c', '8_c.jpg'], ['9c', '9_c.jpg'], ['A_c', 'ace_c.jpg'], ['J_c', 'j_c.jpg'], ['Q_c', 'q_c.jpg'], ['K_c', 'k_c.jpg'],
+['6s', '6_s.jpg'], ['7s', '7_s.jpg'], ['8s', '8_s.jpg'], ['9s', '9_s.jpg'], ['A_s', 'ace_s.jpg'], ['J_s', 'j_s.jpg'], ['Q_s', 'q_s.jpg'], ['K_s', 'k_s.jpg'],
 ];
 var cards = desk.slice(0);
 //var cards1 = ['6', '7', '8', '9', 'J', 'Q', 'K', 'A'];
@@ -57,7 +57,7 @@ function getStatus() {
 		plr.push(player[i][0]);
 	}
 	console.log ("getStatus() dlr: " + dlr + ' ' + "plr: " + plr );
-	return 'Dealer has: ' + dlr.join(' ');
+	return 'Dealer has: ' + dlr.join(', ');
 	 //+ ' Игрок: ' + plr.join(' ') + ' Score: ' + score;
 } 
  
@@ -81,8 +81,8 @@ function getSum(hand) {
 	//сначала считаем все карты, кроме тузов
 	for (var i=0; i<hand.length; i++) {
 		var card = hand[i];
-		if (card[0]!='A') {
-			if (card[0]=='J' || card[0] == 'Q' || card[0] == 'K') {
+		if (card[0].substring(0,1)!='A') {
+			if (isNaN(parseInt(card[0])) ) {
 				sum=sum+10;			
 			} else {
 				sum=sum + parseInt(card[0]);
@@ -92,7 +92,7 @@ function getSum(hand) {
 	// туз считается как 1, если текущая сумма меньше 21, если больше - то как 11	
 	for (var i=0; i<hand.length; i++) {
 		var card = hand[i];
-		if (card[0] == 'A'){
+		if (card[0].substring(0,1) == 'A'){
 			if (sum>10) {
 				sum = sum + 1;
 			} else {
@@ -103,12 +103,13 @@ function getSum(hand) {
 	return sum;
 } 
 
+
 function changeCard(index ,id) {
 		console.log('ChangeCard start - index: ' + index + ' id:' + id);
 	player[index]= getCard();
 	console.log('ChangeCard - new player: ' + player);
 	setCard(player[index], id);
-	setMessage('Ok, you changed your card. ' + getStatus());
+	setMessage('Ok, you changed your card. </br>' + getStatus());
 	document.getElementById("answer").innerHTML = '<button id="end" onclick="checkScore()">to score</button>';
 				
 	console.log('changeCard end - player[index]: ' + player[index]+' player: '+ player);
