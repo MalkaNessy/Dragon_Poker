@@ -7,7 +7,7 @@ var desk = [ ['6d', '6_d.jpg'], ['7d', '7_d.jpg'], ['8d', '8_d.jpg'], ['9d', '9_
 ['6c', '6_c.jpg'], ['7c', '7_c.jpg'], ['8c', '8_c.jpg'], ['9c', '9_c.jpg'], ['A', 'ace_c.jpg'], ['J', 'j_c.jpg'], ['Q', 'q_c.jpg'], ['K', 'k_c.jpg'],
 ['6s', '6_s.jpg'], ['7s', '7_s.jpg'], ['8s', '8_s.jpg'], ['9s', '9_s.jpg'], ['A', 'ace_s.jpg'], ['J', 'j_s.jpg'], ['Q', 'q_s.jpg'], ['K', 'k_s.jpg'],
 ];
-var cards;
+var cards = desk.slice(0);
 //var cards1 = ['6', '7', '8', '9', 'J', 'Q', 'K', 'A'];
 
 function setScore(newScore) {
@@ -27,8 +27,9 @@ function getRandomInt(min,max) {
 }
 
 
+
  function getCard() {
-	cards = desk.slice(0);
+	 console.log('getCard start: берет случайную карту из колоды, удаляет ее из колоды, возвращает карту ');
 	var temp = cards[getRandomInt(0, cards.length - 1)];
 	for (i=0; i<cards.length; i++){
 		if (temp == cards[i]) {
@@ -38,9 +39,9 @@ function getRandomInt(min,max) {
 }
  
  
-function setCard (hand, div_id) {
-	console.log('setCard start');
-	card = hand[1];
+function setCard (oneCard, div_id) {
+	console.log('setCard start, берем карту, вынимаем ее [1] элемент (название картинки) и вставляем в див с div_id');
+	card = oneCard[1];
 	document.getElementById(div_id).innerHTML = '<img src="img/'+card+'" alt="2d" >';
 	console.log('setCard end, card: ' + card);
 }
@@ -54,7 +55,7 @@ function getStatus() {
 	for (i=0; i<player.length; i++){
 		plr.push(player[i][0]);
 	}
-	console.log ("dlr: " + dlr + ' ' + "plr: " + plr );
+	console.log ("getStatus() dlr: " + dlr + ' ' + "plr: " + plr );
 	return 'Дилер: ' + dlr.join(' ') + ' Игрок: ' + plr.join(' ') + ' Score: ' + score;//.join(' ')
 	
 } 
@@ -62,12 +63,12 @@ function getStatus() {
 function getHand (){
 	dealer = [getCard(), getCard()];
 	player = [getCard(), getCard(), getCard()];
-	console.log("getHand () start, player: " + player + "dealer: " + dealer);
+	console.log("Раздача: getHand (), player 3 карты: " + player + "dealer 2 карты: " + dealer);
 }
 
 
 function drawHand (player){
-	console.log("getHand start: " + player);
+	console.log("drawHand start, отрисовка всех трех карт игрока: " + player);
 	setCard(player[0],"1_card" );
 	setCard(player[1],"2_card" );
 	setCard(player[2],"3_card" );
@@ -75,7 +76,7 @@ function drawHand (player){
 
 function getSum(hand) {
 	var sum=0;
-	console.log ('getSum(hand): ' + hand)
+	console.log ('Подсчет очков карт игрока - getSum(hand): ' + hand)
 	//сначала считаем все карты, кроме тузов
 	for (var i=0; i<hand.length; i++) {
 		var card = hand[i];
@@ -101,37 +102,58 @@ function getSum(hand) {
 	return sum;
 } 
 
+function changeCard(index ,id) {
+	player.splice(index,1);
+	player.unshift(getCard());
+	setCard (player[index], id);
+}
+
+function toChangeCard (id){
+	if (id == '1_card'){
+		var index = 0;
+		changeCard(index, id);
+	}else if (id == '2_card'){
+		var index = 1;
+		changeCard(index, id);
+	}else if (id == '3_card'){
+		var index = 2;
+		changeCard(index, id);
+	}else {
+		setMessage("упс, проверить html, такого id_дива нет");
+	}
+}
+
+
+/* 
 function changeCard(id) {
 			console.log ('changeCard start');
 			var last;
 			if (id == '1_card'){
 				player.splice(0,1);
-				player.push(getCard());
-				console.log ('player: ' + player);
-				last = player[player.length-1];
-				
-				console.log ('last: ' + last);
-				console.log ('id: ' + id);
-				
-				setCard(last,id );
+				player.unshift(getCard());
+				setCard (player[0], id);
 					//alert ('После замены: ' + getStatus());
 					setMessage('После замены: ' + getStatus());
 					document.getElementById("answer").innerHTML = '<button id="end" onclick="checkScore()">посчитать</button>';
-				console.log ("getStatus: " + getStatus() + " player: " + player);
+				console.log ("После замены карты 1 - player: " + player );
 			} else if (id == '2_card'){
 				player.splice(1,1);
 				player.push(getCard());
 					//alert ('После замены: ' + getStatus());
 					setMessage('После замены: ' + getStatus());
 					document.getElementById("answer").innerHTML = '<button id="end" onclick="checkScore()">посчитать</button>';
+					console.log ("После замены карты 2 - getStatus: " + getStatus() + " player: " + player);
+			
 			} else if (id == '3_card'){
 				player.splice(2,1);
 				player.push(getCard());
 					//alert ('После замены: ' + getStatus());
 					setMessage('После замены: ' + getStatus());
 					document.getElementById("answer").innerHTML = '<button id="end" onclick="checkScore()">посчитать</button>';
-			}
-} //	changeCard end
+					console.log ("После замены карты 3 - getStatus: " + getStatus() + " player: " + player);
+			
+	//	changeCard end		}
+}  */
 		
 		
 function checkScore (){
@@ -161,11 +183,14 @@ function checkScore (){
 		//alert ('Проигрыш :( ' + getStatus());
 		setMessage('Проигрыш :( ' + getStatus());
 	}
+	console.log ("После подсчета очков - getStatus: " + getStatus() + " player: " + player);
+			
 }
 
 
 				
 function play(){
+	console.log('play() start');
 	getHand ();
 	drawHand (player);
 	if (getSum(player)== 21){
@@ -177,14 +202,17 @@ function play(){
 		setMessage(getStatus() + ' Хотите заменить карту? 1 - да, другое - нет');
 		document.getElementById("answer").innerHTML = '<button id="yes" onclick="yes()">Yes</button><button id="no" onclick="no()">No</button> ';
 	}
+	console.log('play() end');
 }		
 		
 		//сдаем карту игроку либо прекращаем игру
 	function yes(){
+		console.log('yes() start');
 		document.getElementById("answer").innerHTML = '';
 		//дилер берет третью карту
 		dealer.push(getCard());
 		setMessage('Нажмите на карту, которую хотите заменить');
+		console.log('yes() end = dealer: ' + dealer );
 	}
 	
 	
