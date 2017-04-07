@@ -183,7 +183,7 @@ function play(){
 	}
 	console.log('play() end');
 }		
-		
+		  
 		//сдаем карту игроку либо прекращаем игру
 	function yes(){
 		console.log('yes() start');
