@@ -120,55 +120,83 @@ NAVIGATION
 /****************************
 TABLE
 *****************************/
-.table {
-	background: #006000;
-	padding: 15px;
+ .flex-container {
+    width: 100%;
+    height: 500px;
+    background-color: lightgrey;
 }
 
-#table {
-	padding: 5px;
-	max-width: 50%;
-	margin: 0 auto;
-	border: 13px solid #004800;
+.flex-item {
+    background-color: #006000;
+   /*  width: 300px;  */
+    height: 95%;
 }
 
-.score {
-	/* border: 13px solid #004800; */
-	float: right;
-	width: 20%;
-	color: #f2e7bf;
-	padding: 7px;
-	font-size: 1em;
-	text-align: center;
-}
-.cards {
-	text-align: center;
-	margin-top: 0px;
-	margin-bottom: 0px;
-	    -webkit-padding-start: 0;
-}
-.cards li{
-	display: inline-block;
-	padding: 6px;
+.centred {
+	display: flex;
+	-webkit-justify-content: center;
+    justify-content: center;
+	-webkit-align-items: center;
+    align-items: center;
 	
 }
 
+#table {
+	background: #004800;
+	/* border: 5px solid #004800; */
+	/* padding: 10px; */
+	max-width: 100%;
+	
+}
+
+#desk  {
+	/* border: 2px solid magenta; */
+	min-width: 60px;
+	padding: 10px;
+}
+
+#desk img {
+	width: 150px;
+}
+
+#play {
+	width: 70%;
+	/* min-width: 370px; */
+	/* border: 2px solid red; */
+	background: #006000;
+}
+
+#in_play{
+	/* border: 13px solid #004800; */
+	padding: 15px;
+	width: 100%;
+	
+}
+
+#inform {
+	background-color: #1D1D1D;
+	border-left: 13px solid #004800;
+	flex-direction: column;
+}
+
+.who {
+	color: #f2e7bf;
+	font-weight: bold;
+}
+#dialog {
+	margin-top: 12px;
+}
+
 #talk {
-	background-color:#f2e7bf;
+	background: #f2e7bf;
 	margin: 0 auto;
 	margin-bottom: 0.7em;
 	color: #001a4c;
-	text-align: center;
 	padding: 7px;
-	padding-bottom: 0;
 	font-size: 1em;
 }
-#dialog {
-	background-color:#f2e7bf;
-	margin: 0 auto;
-	padding-bottom: 3px;
-}
- #answer {
+
+#answer {
 	width: 80px;
 	margin: 0 auto;
 	/* display: none; */
@@ -181,11 +209,44 @@ button {
 	margin: 2px;
 }
 
-#desk  {
-	max-width: 300px;
-	margin: 0 auto;
-	margin-top: 10px;
+.cards {
+	display: flex;
+	text-align: center;
+	margin: 0px;
+	    -webkit-padding-start: 0;
+		
 }
+.cards li{
+	margin: 0 4px;
+	display: inline-block;
+	padding: 4px;
+	width: 77px;
+	height: 112px;
+	background-color: #004800;
+}
+.cards li img {
+	width: 100%;
+}
+
+
+.score {
+	color: #f2e7bf;
+	padding: 25px;
+	font-size: 1em;
+	height: 80%;
+	/* border: 2px solid magenta; */
+}
+
+#toBet {
+ width: 35px;
+ padding-left: 6px; 
+ padding-right:6px; 
+}
+
+#setBet {
+ display: block;
+}
+
 
 
 

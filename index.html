@@ -27,30 +27,50 @@
 		</ul>
 	</header>
 	<div style="clear: both;"> </div>
-<div class="table">
-	<div class="score" id="score">Score: <div class="innerScore" id="innerScore"></div></br></div>
-	<div class="table" id="table">
 	
-			<ul class="cards">
-					<li id="1_card" onclick="toChangeCard('1_card')"><img src="img/6_d.jpg" alt="2d" ></li>
-					<li id="2_card" onclick="toChangeCard('2_card')"><img src="img/q_d.jpg" alt="qd" ></li>
-					<li id="3_card" onclick="toChangeCard('3_card')"><img src="img/ace_d.jpg" alt="ad" ></li>
-			</ul>
+<div id="table" class="flex-container centred" >
+	<div class="flex-item centred" id="play">
+		<div id="in_play" >
+					<div class="who">Dealer</div>
+					<ul id="dealer_cards" class="cards centred">
+							<li id="d1"><img src="img/card.jpg" alt="card" ></li>
+							<li id="d2"><img src="img/card.jpg" alt="card" ></li>
+							<li id="d3"><img src="img/card.jpg" alt="card" ></li>
+							<li id="d4"><img src="img/card.jpg" alt="card" ></li>
+							<li id="d5"><img src="img/card.jpg" alt="card" ></li>
+					</ul>	
+			
 			<div id="dialog">
 				<div id="talk" > </div>
 				<div id="answer"> </div>
 			</div>
-			<!-- <button id="y" onclick="yes()">Yes</button><button id="n">No</button> -->
-			<!-- <input type="text" id="myInput" ><button onclick="dialog()"></button>   -->
-			
-
-
-
-			
-			<div id="desk" onclick="play()"><a href="#"><img src="img/desk.jpg" alt="Desk" ></a> </div>			
-		
+			<ul id="player_cards" class="cards centred">
+					<li id="1p" onclick="toChangeCard('1p')"><img src="img/card.jpg" alt="card" ></li>
+					<li id="2p" onclick="toChangeCard('2p')"><img src="img/card.jpg" alt="card" ></li>
+					<li id="3p" onclick="toChangeCard('3p')"><img src="img/card.jpg" alt="card" ></li>
+					<li id="4p" onclick="toChangeCard('2p')"><img src="img/card.jpg" alt="card" ></li>
+					<li id="5p" onclick="toChangeCard('3p')"><img src="img/card.jpg" alt="card" ></li>
+			</ul>
+			<div class="who">Player</div>
+		</div><!-- in_play end -->	
 	</div>
- </div>				
+	
+	<div id="inform" class="flex-item centred">
+		<div id="score" class="score " >Score: <div class="innerScore" id="innerScore"></div>
+				</br>Bet:</br>
+			<div class="innerScore" id="innerBet" size="5">0</div>
+			<input type="text" name="toBet" id="toBet" value=""><br>
+			<input type="submit" id="setBet" onclick="setBet()" value="to Bet">
+		</div><!--</div> id="score" end -->
+		
+		<div id="desk" onclick="play()">
+		<div class="who" >To play</div>
+		<img src="img/deck.jpg" alt="Desk" > 
+		
+		</div>
+	</div>
+</div>
+				
 			
 	<footer><a href="#">&copy; 2017 Malka Korets </a>	 </footer>
  <script src="js/DragonPoker.js"> </script> 
