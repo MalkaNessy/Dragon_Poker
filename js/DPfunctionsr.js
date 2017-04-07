@@ -1,5 +1,4 @@
 var score;
-var bet;
 var message;
 var dealer;
 var player;
@@ -11,32 +10,23 @@ var desk = [ ['6d', '6_d.jpg'], ['7d', '7_d.jpg'], ['8d', '8_d.jpg'], ['9d', '9_
 var cards = desk.slice(0);
 //var cards1 = ['6', '7', '8', '9', 'J', 'Q', 'K', 'A'];
 
-var player_ul="player_cards"; // id элемента, куда вставлять карты игрока
-var dealer_ul="dealer_cards"; // id элемента, куда вставлять карты диллера
-
-
-
 function setScore(newScore) {
 	score = newScore;
 	document.getElementById("innerScore").innerHTML = score+"";
 }
-
-function setBet(newBet) {
-	bet = newBet;
-	document.getElementById("innerBet").innerHTML = bet+"";
-}
-
 function setMessage(newMessage) {
 	message = newMessage;
 	document.getElementById("talk").innerHTML = message+"";
 }
 
 setScore(50);
-setMessage("Hello, wellcome to game!</br>Click the card deck to start the game ");
+setMessage("Hello, wellcome to game!</br>Click the deck to get your cards ");
 
 function getRandomInt(min,max) {
 	return Math.floor(Math.random()*(max-min+1))+min;
 }
+
+
 
  function getCard() {
 	 console.log('getCard start: берет случайную карту из колоды, удаляет ее из колоды, возвращает карту ');
@@ -67,36 +57,23 @@ function getStatus() {
 		plr.push(player[i][0]);
 	}
 	console.log ("getStatus() dlr: " + dlr + ' ' + "plr: " + plr );
-	return 'Диллер: ' + dlr.join(', ') + ' Игрок: ' + plr.join(' ') + ' Score: ' + score ;
+	return 'Dealer has: ' + dlr.join(', ');
 	 //+ ' Игрок: ' + plr.join(' ') + ' Score: ' + score;
 } 
  
 function getHand (){
-	dealer = [getCard(), getCard(), getCard(), getCard(), getCard()];
-	player = [getCard(), getCard(), getCard(), getCard(), getCard()];
-	console.log("Раздача: getHand (), " + "dealer: " + dealer + "player: " + player );
+	dealer = [getCard(), getCard()];
+	player = [getCard(), getCard(), getCard()];
+	console.log("Раздача: getHand (), player 3 карты: " + player + "dealer 2 карты: " + dealer);
 }
 
-//??????????????????????????????????????????
-/* function drawHand (player){
+
+function drawHand (player){
 	console.log("drawHand start, отрисовка всех трех карт игрока: " + player);
 	setCard(player[0],"1_card" );
 	setCard(player[1],"2_card" );
-	setCard(player[2],"3_card" ); */
-	
-// отрисовка карт раздачи дилера и игрока
-function drawHand (hand, ul_id, li_id){
-	console.log("drawHand() start, hand =   " + hand );
-	console.log("hand ul_id =   " + ul_id );
-	var html='';
-	for (var i=0; i<hand.length; i++){
-		var img = setCard(hand[i]);
-		html = html + ' <li id="'+i+li_id+'" onclick="toChangeCard(\''+i+li_id+'\')"><img src="img/' + img+ '" alt="card" ></li>';
-	}
-	document.getElementById(ul_id).innerHTML = html;
-		console.log("drawHand() end  ");
+	setCard(player[2],"3_card" );
 }
-
 
 function getSum(hand) {
 	var sum=0;
@@ -195,7 +172,7 @@ function checkScore (){
 function play(){
 	console.log('play() start');
 	getHand ();
-	drawHand (player,"player_cards", "p" );
+	drawHand (player);
 	if (getSum(player)== 21){
 		//alert ('Дьявольское везение! Black Jack на раздаче!');
 		setMessage("You're lucky! Black Jack!.. </br> To play again ckick on card deck.");

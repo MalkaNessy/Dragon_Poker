@@ -175,6 +175,7 @@ TABLE
 
 #inform {
 	background-color: #1D1D1D;
+	/* background-color:#001a4c; */
 	border-left: 13px solid #004800;
 	flex-direction: column;
 }
