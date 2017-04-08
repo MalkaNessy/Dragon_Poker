@@ -14,8 +14,6 @@ var cards = desk.slice(0);
 var player_ul="player_cards"; // id элемента, куда вставлять карты игрока
 var dealer_ul="dealer_cards"; // id элемента, куда вставлять карты диллера
 
-
-
 function setScore(newScore) {
 	score = newScore;
 	document.getElementById("innerScore").innerHTML = score+"";
@@ -26,6 +24,10 @@ function setBet(newBet) {
 	document.getElementById("innerBet").innerHTML = bet+"";
 }
 
+function getRandomInt(min,max) {
+	return Math.floor(Math.random()*(max-min+1))+min;
+}
+
 function setMessage(newMessage) {
 	message = newMessage;
 	document.getElementById("talk").innerHTML = message+"";
@@ -34,28 +36,84 @@ function setMessage(newMessage) {
 setScore(50);
 setMessage("Hello, wellcome to game!</br>Click the card deck to start the game ");
 
-function getRandomInt(min,max) {
-	return Math.floor(Math.random()*(max-min+1))+min;
-}
+
 
  function getCard() {
 	 console.log('getCard start: берет случайную карту из колоды, удаляет ее из колоды, возвращает карту ');
-	var temp = cards[getRandomInt(0, cards.length - 1)];
+	var oneCard = cards[getRandomInt(0, cards.length - 1)];
 	for (i=0; i<cards.length; i++){
-		if (temp == cards[i]) {
+		if (oneCard == cards[i]) {
 			cards.splice(i,1);
 		}
-	} return temp;
+	} return oneCard;
 }
- 
- 
- 
-function setCard (oneCard, div_id) {
-	console.log('setCard start, берем карту, вынимаем ее [1] элемент (название картинки) и вставляем в див с div_id');
-	var card = oneCard[1];
-	document.getElementById(div_id).innerHTML = '<img src="img/'+card+'" alt="2d" >';
-	console.log('setCard end, card: ' + card);
+
+function getHand (){
+	dealer = [getCard(), getCard(), getCard(), getCard(), getCard()];
+	player = [getCard(), getCard(), getCard(), getCard(), getCard()];
+	console.log("Раздача: getHand (), " + "dealer: " + dealer + "player: " + player );
 }
+
+ //берем карту, вынимаем ее [1] элемент (название картинки)');
+function getImg(oneCard) {
+	console.log('getImg(oneCard) start ');
+	return img = oneCard[1];
+}
+
+function getSign(ul_id){
+	console.log('getSign(ul_id) start');
+	return ul_id.substring(0,2);
+} 
+
+
+function createCardView_li(img, li_id){
+	console.log('createCardView_li(img, li_id) start');
+	return html = ' <li id="'+li_id+'" onclick="toChangeCard(\''+li_id+'\')"><img src="img/' + img+ '" alt="card" ></li>';
+
+} 
+
+function drawHandView_ul(hand, ul_id){
+	console.log('drawHandView_ul(hand, ul_id) start');
+	var html='';
+	var sign = getSign(ul_id);
+	for (var i=0; i<hand.length; i++){
+		var li_id = i + sign;
+		var img = getImg(hand[i]);
+		html = html + createCardView_li(img, li_id);
+	}
+	document.getElementById(ul_id).innerHTML = html;
+	console.log('drawHandView_ul(hand, ul_id) end');
+}
+function drawDealer(hand, ul_id){
+	console.log('drawDealer(hand, ul_id) start');
+	var html='';
+	//var sign = getSign(ul_id);
+	for (var i=0; i<=1; i++){
+		//var li_id = i + sign;
+		var img = getImg(hand[i]);
+		html = html + createCardView_li(img );//,li_id
+	}
+	for (var i=0; i<=2; i++){
+		//var li_id = i + sign;
+		var img = 'card.jpg';
+		html = html + createCardView_li(img);
+	}
+	document.getElementById(ul_id).innerHTML = html;
+	console.log('drawHandView_ul(hand, ul_id) end');
+}
+
+function init(){
+	console.log('init() start');
+	getHand ();
+	drawHandView_ul(player, player_ul);
+	drawDealer(dealer, dealer_ul);
+	console.log('init() end');
+}
+
+ 
+
+
+
   
 function getStatus() {
 	var dlr = [];
@@ -71,32 +129,6 @@ function getStatus() {
 	 //+ ' Игрок: ' + plr.join(' ') + ' Score: ' + score;
 } 
  
-function getHand (){
-	dealer = [getCard(), getCard(), getCard(), getCard(), getCard()];
-	player = [getCard(), getCard(), getCard(), getCard(), getCard()];
-	console.log("Раздача: getHand (), " + "dealer: " + dealer + "player: " + player );
-}
-
-//??????????????????????????????????????????
-/* function drawHand (player){
-	console.log("drawHand start, отрисовка всех трех карт игрока: " + player);
-	setCard(player[0],"1_card" );
-	setCard(player[1],"2_card" );
-	setCard(player[2],"3_card" ); */
-	
-// отрисовка карт раздачи дилера и игрока
-function drawHand (hand, ul_id, li_id){
-	console.log("drawHand() start, hand =   " + hand );
-	console.log("hand ul_id =   " + ul_id );
-	var html='';
-	for (var i=0; i<hand.length; i++){
-		var img = setCard(hand[i]);
-		html = html + ' <li id="'+i+li_id+'" onclick="toChangeCard(\''+i+li_id+'\')"><img src="img/' + img+ '" alt="card" ></li>';
-	}
-	document.getElementById(ul_id).innerHTML = html;
-		console.log("drawHand() end  ");
-}
-
 
 function getSum(hand) {
 	var sum=0;
