@@ -74,6 +74,12 @@ function createCardView_li(img, li_id){
 
 } 
 
+function createCardView_dealer_li(img, li_id){
+	console.log('createCardView_dealer_li(img, li_id) start');
+	return html = ' <li id="'+li_id+'"><img src="img/' + img+ '" alt="card" ></li>';
+
+}
+
 function drawHandView_ul(hand, ul_id){
 	console.log('drawHandView_ul(hand, ul_id) start');
 	var html='';
@@ -90,16 +96,16 @@ function drawHandView_ul(hand, ul_id){
 function drawDealer(hand, ul_id){
 	console.log('drawDealer(hand, ul_id) start');
 	var html='';
-	//var sign = getSign(ul_id);
+	var sign = getSign(ul_id);
 	for (var i=0; i<=1; i++){
-		//var li_id = i + sign;
+		var li_id = i + sign;
 		var img = getImg(hand[i]);
-		html = html + createCardView_li(img );//,li_id
+		html = html + createCardView_dealer_li(img,li_id );//,li_id
 	}
 	for (var i=0; i<=2; i++){
-		//var li_id = i + sign;
+		var li_id = i + sign;
 		var img = 'card.jpg';
-		html = html + createCardView_li(img);
+		html = html + createCardView_li(img,li_id);
 	}
 	document.getElementById(ul_id).innerHTML = html;
 	console.log('drawHandView_ul(hand, ul_id) end');
@@ -182,14 +188,15 @@ function changeThisCard(id) {
 		document.getElementById(id).innerHTML = '<img src="img/'+img+'" alt="card">';
 		document.getElementById(id).style.backgroundColor = "yellow";
 		console.log('changeThisCard(id)end ');
+		count ++;
+		less --;
 	}
 }
 
 
 function toChangeCard (id){
 	changeThisCard(id);	
-	count ++;
-	less --;
+	
 	if (less!==0){
 		askToChange()}
 	else {
