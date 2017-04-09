@@ -3,6 +3,7 @@ var bet;
 var message;
 var dealer;
 var player;
+var count = 0;
 var desk = [ ['6d', '6_d.jpg'], ['7d', '7_d.jpg'], ['8d', '8_d.jpg'], ['9d', '9_d.jpg'], ['A_d', 'ace_d.jpg'], ['J_d', 'j_d.jpg'], ['Q_d', 'q_d.jpg'], ['K_d', 'k_d.jpg'],
 ['6h', '6_h.jpg'], ['7h', '7_h.jpg'], ['8h', '8_h.jpg'], ['9h', '9_h.jpg'], ['A_h', 'ace_h.jpg'], ['J_h', 'j_h.jpg'], ['Q_h', 'q_h.jpg'], ['K_h', 'k_h.jpg'],
 ['6c', '6_c.jpg'], ['7c', '7_c.jpg'], ['8c', '8_c.jpg'], ['9c', '9_c.jpg'], ['A_c', 'ace_c.jpg'], ['J_c', 'j_c.jpg'], ['Q_c', 'q_c.jpg'], ['K_c', 'k_c.jpg'],
@@ -84,6 +85,7 @@ function drawHandView_ul(hand, ul_id){
 	document.getElementById(ul_id).innerHTML = html;
 	console.log('drawHandView_ul(hand, ul_id) end');
 }
+
 function drawDealer(hand, ul_id){
 	console.log('drawDealer(hand, ul_id) start');
 	var html='';
@@ -102,11 +104,19 @@ function drawDealer(hand, ul_id){
 	console.log('drawHandView_ul(hand, ul_id) end');
 }
 
+
+
+
+
 function init(){
 	console.log('init() start');
 	getHand ();
 	drawHandView_ul(player, player_ul);
 	drawDealer(dealer, dealer_ul);
+	//document.getElementById("answer").innerHTML = '<button id="end" onclick="checkScore()">to score</button>';
+	askToChange();
+	
+	
 	console.log('init() end');
 }
 
@@ -129,10 +139,9 @@ function getStatus() {
 	 //+ ' Игрок: ' + plr.join(' ') + ' Score: ' + score;
 } 
  
-
 function getSum(hand) {
 	var sum=0;
-	console.log ('Подсчет очков карт игрока - getSum(hand): ' + hand)
+	console.log ('Подсчет oчков карт игрока - getSum(hand): ' + hand)
 	//сначала считаем все карты, кроме тузов
 	for (var i=0; i<hand.length; i++) {
 		var card = hand[i];
@@ -158,38 +167,42 @@ function getSum(hand) {
 	return sum;
 } 
 
-
-function changeCard(index ,id) {
-		console.log('ChangeCard start - index: ' + index + ' id:' + id);
-	player[index]= getCard();
-	console.log('ChangeCard - new player: ' + player);
-	setCard(player[index], id);
-	setMessage('Ok, you changed your card. </br>' + getStatus());
-	document.getElementById("answer").innerHTML = '<button id="end" onclick="checkScore()">to score</button>';
-				
-	console.log('changeCard end - player[index]: ' + player[index]+' player: '+ player);
+function askToChange (){
+		setMessage(getStatus() +  " Вы заменили " + count + "карт. Do you want to change youre card?");
+		document.getElementById("answer").innerHTML = '<button id="yes" onclick="yes()">Yes</button><button id="no" onclick="no()">No</button> ';
+}
 	
+function changeThisCard(id) {
+		console.log('changeThisCard(id) start');
+	var index = parseInt(id.substring(0,1));
+	player[index] = getCard();
+	console.log('changeThisCard(id)end ');
 }
 
 function toChangeCard (id){
-	if (id == '1_card'){
-		console.log('toChangeCard id' + id);
-		var index = 0;
-		changeCard(index, id);
-	}else if (id == '2_card'){
-		console.log('toChangeCard id' + id);
-		var index = 1;
-		changeCard(index, id);
-	}else if (id == '3_card'){
-		console.log('toChangeCard id' + id);
-		var index = 2;
-		changeCard(index, id);
-	}else {
-		setMessage("there is no such div_id in html");
-	}
+	changeThisCard(id);
+	drawHandView_ul(player, player_ul);
+	count ++;
+	askToChange();
 }
 
-
+//сдаем карту игроку либо прекращаем игру
+	function yes(){
+		console.log('yes() start');
+		document.getElementById("answer").innerHTML = '';
+		setMessage(getStatus() +  '</br>Please click the card you want to change');
+		console.log('yes() end ' );
+	}
+	
+	
+	
+	function no(){
+		document.getElementById("answer").innerHTML = '';
+		drawHandView_ul(dealer, dealer_ul);
+		//проверяем счет
+		checkScore();
+	}	
+	
 	
 function checkScore (){
 	//удаляем кнопку
@@ -223,7 +236,7 @@ function checkScore (){
 }
 
 
-				
+/* 				
 function play(){
 	console.log('play() start');
 	getHand ();
@@ -238,26 +251,8 @@ function play(){
 	}
 	console.log('play() end');
 }		
-		  
-		//сдаем карту игроку либо прекращаем игру
-	function yes(){
-		console.log('yes() start');
-		document.getElementById("answer").innerHTML = '';
-		//дилер берет третью карту
-		dealer.push(getCard());
-		setMessage(getStatus() +  '</br>Please click the card you want to change');
-		console.log('yes() end = dealer: ' + dealer );
-	}
-	
-	
-	
-	function no(){
-		document.getElementById("answer").innerHTML = '';
-		//дилер берет третью карту
-		dealer.push(getCard());
-		//проверяем счет
-		checkScore();
-	}	
+	 */	  
+		
 		
 		
 		
