@@ -175,12 +175,13 @@ function getSum(hand) {
 } 
 
 function askToChange (){
-		setMessage(getStatus() +  " Вы заменили " + count + " карт, и можете заменить еще " + less +". Do you want to change youre card?");
-		document.getElementById("answer").innerHTML = '<button id="yes"  onclick="yes()">Yes</button><button id="no" onclick="no()">No</button> ';
+		setMessage(getStatus() +  " Вы заменили " + count + " карт, и можете заменить еще " + less +". Кликните на карту, которую хотите заменить");
+		document.getElementById("answer").innerHTML = '<button id="no" onclick="no()">К подсчету очков</button> ';
 }
 
 function changeThisCard(id) {
-	if (document.getElementById(id).style.backgroundColor !== "yellow"){
+	var background = "rgb(0, 150, 0)";
+	if (document.getElementById(id).style.backgroundColor != background){
 		console.log('changeThisCard(id) start');
 		var index = parseInt(id.substring(0,1));
 		player[index] = getCard();
@@ -188,7 +189,7 @@ function changeThisCard(id) {
 		var img = getImg(player[index]);
 		console.log("img: " + img);
 		document.getElementById(id).innerHTML = '<img src="img/'+img+'" alt="card">';
-		document.getElementById(id).style.backgroundColor = "yellow";
+		document.getElementById(id).style.backgroundColor = background;
 		console.log('changeThisCard(id)end ');
 		count ++;
 		less --;
@@ -197,34 +198,18 @@ function changeThisCard(id) {
 
 
 function toChangeCard (id ){
-	
-	if (ifChange){
 		changeThisCard(id);	
-		
 		if (less!==0){
 			askToChange()}
 		else {
 			no();
 		}
-	} else {
-		setMessage('jkjkjkjkjk');
-	};
+		
 }
 
-//сдаем карту игроку либо прекращаем игру
-function yes(){
-	console.log('yes() start');
-	document.getElementById("answer").innerHTML = '';
-	ifChange = true;
-	setMessage(getStatus() +  '</br>Please click the card you want to change');
-	console.log('yes() end ' );
-	
-}
-	
-	
 	
 function no(){
-	ifChange = false;
+	
 	document.getElementById("answer").innerHTML = '';
 	//показываем все карты диллера
 	drawHandView_ul(dealer, dealer_ul);
@@ -234,7 +219,7 @@ function no(){
 	
 	
 function checkScore (){
-	ifChange = false;
+	
 	//удаляем кнопку
 	document.getElementById("answer").innerHTML = '';
 	//проверяем результат
