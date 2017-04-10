@@ -1,5 +1,5 @@
 var score;
-var bet;
+var bet =0;
 var message;
 var dealer;
 var player;
@@ -17,20 +17,28 @@ var cards = desk.slice(0);
 var player_ul="player_cards"; // id элемента, куда вставлять карты игрока
 var dealer_ul="dealer_cards"; // id элемента, куда вставлять карты диллера
 
+//создает новый счет в зависимости от ставки или подсчета очков в конце игры
 function setScore(newScore) {
 	score = newScore;
 	document.getElementById("innerScore").innerHTML = score+"";
 }
 
-function setBet(newBet) {
-	bet = newBet;
-	document.getElementById("innerBet").innerHTML = bet+"";
+//берет ставку, введенную игроком, показывает ставку, меняет сумму счета и показывает ее, убирает кнопку "сделать ставку"
+function setBet() {
+	bet = document.getElementById("toBet").value;
+	document.getElementById("toBet").value = "";
+	document.getElementById("innerBet").innerHTML = bet;
+	document.getElementById("setBet").style.display = "none";
+	bet = parseInt(bet);
+	setScore((score - bet));
 }
 
+//возвращает случайное число в заданном промежутке
 function getRandomInt(min,max) {
 	return Math.floor(Math.random()*(max-min+1))+min;
 }
 
+//размещает текст в заданном элементе
 function setMessage(newMessage) {
 	message = newMessage;
 	document.getElementById("talk").innerHTML = message+"";
@@ -40,9 +48,9 @@ setScore(50);
 setMessage("Hello, wellcome to game!</br>Click the card deck to start the game ");
 
 
-
+//берет случайную карту из колоды, удаляет ее из колоды, возвращает карту
  function getCard() {
-	 console.log('getCard start: берет случайную карту из колоды, удаляет ее из колоды, возвращает карту ');
+	 console.log('getCard start:  ');
 	var oneCard = cards[getRandomInt(0, cards.length - 1)];
 	for (i=0; i<cards.length; i++){
 		if (oneCard == cards[i]) {
@@ -51,6 +59,7 @@ setMessage("Hello, wellcome to game!</br>Click the card deck to start the game "
 	} return oneCard;
 }
 
+//создает список карт игрока и дилера
 function getHand (){
 	dealer = [getCard(), getCard(), getCard(), getCard(), getCard()];
 	player = [getCard(), getCard(), getCard(), getCard(), getCard()];
@@ -63,24 +72,27 @@ function getImg(oneCard) {
 	return img = oneCard[1];
 }
 
+//из названия списка вынимаем первые два символа, которые будем добавлять в id_li
 function getSign(ul_id){
 	console.log('getSign(ul_id) start');
 	return ul_id.substring(0,2);
 } 
 
-
+//создаем одну строчку li, включая li_id и картинку
 function createCardView_li(img, li_id){
 	console.log('createCardView_li(img, li_id) start');
 	return html = ' <li id="'+li_id+'" onclick="toChangeCard(\''+li_id+'\')"><img src="img/' + img+ '" alt="card" ></li>';
 
 } 
 
+//создаем одну строчку li для списка дилера
 function createCardView_dealer_li(img, li_id){
 	console.log('createCardView_dealer_li(img, li_id) start');
 	return html = ' <li id="'+li_id+'"><img src="img/' + img+ '" alt="card" ></li>';
 
 }
 
+//отрисовываем все карты игрока
 function drawHandView_ul(hand, ul_id){
 	console.log('drawHandView_ul(hand, ul_id) start');
 	var html='';
@@ -94,6 +106,7 @@ function drawHandView_ul(hand, ul_id){
 	console.log('drawHandView_ul(hand, ul_id) end');
 }
 
+//отрисовываем все карты дилера
 function drawDealer(hand, ul_id){
 	console.log('drawDealer(hand, ul_id) start');
 	var html='';
@@ -116,22 +129,24 @@ function drawDealer(hand, ul_id){
 
 
 
-
+//начинаем игру
 function init(){
-	console.log('init() start');
-	getHand ();
-	drawHandView_ul(player, player_ul);
-	drawDealer(dealer, dealer_ul);
-	askToChange();
-	console.log('init() end');
+	if(bet!=0){
+		console.log('init() start');
+		getHand ();
+		drawHandView_ul(player, player_ul);
+		drawDealer(dealer, dealer_ul);
+		askToChange();
+		console.log('init() end');
+	}else {
+		setMessage("Set bet before starting play");
+	}
+	
 }
 
  //document.getElementById("answer").innerHTML = '<button id="end" onclick="checkScore()">to score</button>';
 	
-
-
-
-  
+//показывает состояние списков карт игрока, дилера и общий счет
 function getStatus() {
 	var dlr = [];
 	var plr = [];
@@ -145,7 +160,8 @@ function getStatus() {
 	return 'Диллер: ' + dlr.join(', ') + ' Игрок: ' + plr.join(' ') + ' Score: ' + score ;
 	 //+ ' Игрок: ' + plr.join(' ') + ' Score: ' + score;
 } 
- 
+
+//подсчет суммы очков 
 function getSum(hand) {
 	var sum=0;
 	console.log ('Подсчет oчков карт игрока - getSum(hand): ' + hand)
@@ -174,11 +190,13 @@ function getSum(hand) {
 	return sum;
 } 
 
+//запрос игроку, желает ли он поменять карты; создает кнопку "к подсчету очков"
 function askToChange (){
-		setMessage(getStatus() +  " Вы заменили " + count + " карт, и можете заменить еще " + less +". Кликните на карту, которую хотите заменить");
-		document.getElementById("answer").innerHTML = '<button id="no" onclick="no()">К подсчету очков</button> ';
+		setMessage(" Вы заменили " + count + " карт, и можете заменить еще " + less +". </br>Кликните на карту, которую хотите заменить");
+		document.getElementById("answer").innerHTML = '<button id="no" onclick="no()">to score</button> ';
 }
 
+//заменяет одну карту в списке игрока, отрисовывает и выделяет
 function changeThisCard(id) {
 	var background = "rgb(0, 150, 0)";
 	if (document.getElementById(id).style.backgroundColor != background){
@@ -196,7 +214,7 @@ function changeThisCard(id) {
 	}
 }
 
-
+//вызывает функцию замены одной карты и проверяет счетчик. Если нужно, снова вызывает замену карты
 function toChangeCard (id ){
 		changeThisCard(id);	
 		if (less!==0){
@@ -207,7 +225,7 @@ function toChangeCard (id ){
 		
 }
 
-	
+//вызывается, если игрок больше не хочет менять карты. Отрисовывает все карты дилера и вызывает функцию подсчета очков	
 function no(){
 	
 	document.getElementById("answer").innerHTML = '';
@@ -229,24 +247,24 @@ function checkScore (){
 	if (sumPlayer == 21) {
 		setScore( score + 100 );
 		//alert ('У вас Black Jack!' + getStatus());
-		setMessage('You has Black Jack!' + getStatus());
+		setMessage('You has Black Jack!' );
 	} else if (sumDealer == 21) {
 		setScore( score - 20 );
 		//alert ('У дилера Блэк Джек! ' + getStatus());
-		setMessage('Dealer has Black Jack! ' + getStatus());
+		setMessage('Dealer has Black Jack! ' );
 	} else if (sumPlayer == sumDealer) {
 		//alert ('Ничья! ' + getStatus());
-		setMessage('Dead heat! ' + getStatus());
+		setMessage('Dead heat! ' );
 	} else if (sumPlayer > sumDealer) {
 		setScore( score + 50 );
 		//alert ('Выигрыш! :) ' + getStatus());
-		setMessage('You win! :) ' + getStatus());
+		setMessage('You win! :) ' );
 	} else {
 		setScore( score -100 );
 		//alert ('Проигрыш :( ' + getStatus());
-		setMessage('You loos :( ' + getStatus());
+		setMessage('You loos :( ' );
 	}
-	console.log ("После подсчета очков - getStatus: " + getStatus() + " player: " + player);
+	//console.log ("После подсчета очков - getStatus: " + getStatus() + " player: " + player);
 			
 }
 
