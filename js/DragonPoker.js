@@ -5,6 +5,7 @@ var dealer;
 var player;
 var count = 0;
 var less = 5;
+var ifChange = false;
 var desk = [ ['6d', '6_d.jpg'], ['7d', '7_d.jpg'], ['8d', '8_d.jpg'], ['9d', '9_d.jpg'], ['A_d', 'ace_d.jpg'], ['J_d', 'j_d.jpg'], ['Q_d', 'q_d.jpg'], ['K_d', 'k_d.jpg'],
 ['6h', '6_h.jpg'], ['7h', '7_h.jpg'], ['8h', '8_h.jpg'], ['9h', '9_h.jpg'], ['A_h', 'ace_h.jpg'], ['J_h', 'j_h.jpg'], ['Q_h', 'q_h.jpg'], ['K_h', 'k_h.jpg'],
 ['6c', '6_c.jpg'], ['7c', '7_c.jpg'], ['8c', '8_c.jpg'], ['9c', '9_c.jpg'], ['A_c', 'ace_c.jpg'], ['J_c', 'j_c.jpg'], ['Q_c', 'q_c.jpg'], ['K_c', 'k_c.jpg'],
@@ -97,18 +98,19 @@ function drawDealer(hand, ul_id){
 	console.log('drawDealer(hand, ul_id) start');
 	var html='';
 	var sign = getSign(ul_id);
+	for (var i=0; i<hand.length; i++){
+		var li_id = i + sign;
+		var backImg = 'card.jpg';
+		html = html + createCardView_dealer_li(backImg,li_id);
+	}
+	document.getElementById(ul_id).innerHTML = html;
+		
 	for (var i=0; i<=1; i++){
 		var li_id = i + sign;
 		var img = getImg(hand[i]);
-		html = html + createCardView_dealer_li(img,li_id );//,li_id
+		document.getElementById(li_id).innerHTML = '<img src="img/'+img+'" alt="card">';
+		console.log('drawHandView_ul(hand, ul_id) end');
 	}
-	for (var i=0; i<=2; i++){
-		var li_id = i + sign;
-		var img = 'card.jpg';
-		html = html + createCardView_li(img,li_id);
-	}
-	document.getElementById(ul_id).innerHTML = html;
-	console.log('drawHandView_ul(hand, ul_id) end');
 }
 
 
@@ -194,27 +196,35 @@ function changeThisCard(id) {
 }
 
 
-function toChangeCard (id){
-	changeThisCard(id);	
+function toChangeCard (id ){
 	
-	if (less!==0){
-		askToChange()}
-	else {
-		no();
-	}
+	if (ifChange){
+		changeThisCard(id);	
+		
+		if (less!==0){
+			askToChange()}
+		else {
+			no();
+		}
+	} else {
+		setMessage('jkjkjkjkjk');
+	};
 }
 
 //сдаем карту игроку либо прекращаем игру
-	function yes(){
-		console.log('yes() start');
-		document.getElementById("answer").innerHTML = '';
-		setMessage(getStatus() +  '</br>Please click the card you want to change');
-		console.log('yes() end ' );
-	}
+function yes(){
+	console.log('yes() start');
+	document.getElementById("answer").innerHTML = '';
+	ifChange = true;
+	setMessage(getStatus() +  '</br>Please click the card you want to change');
+	console.log('yes() end ' );
+	
+}
 	
 	
 	
 function no(){
+	ifChange = false;
 	document.getElementById("answer").innerHTML = '';
 	//показываем все карты диллера
 	drawHandView_ul(dealer, dealer_ul);
@@ -224,6 +234,7 @@ function no(){
 	
 	
 function checkScore (){
+	ifChange = false;
 	//удаляем кнопку
 	document.getElementById("answer").innerHTML = '';
 	//проверяем результат
