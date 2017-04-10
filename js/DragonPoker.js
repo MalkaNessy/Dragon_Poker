@@ -176,7 +176,7 @@ function getSum(hand) {
 
 function askToChange (){
 		setMessage(getStatus() +  " Вы заменили " + count + " карт, и можете заменить еще " + less +". Do you want to change youre card?");
-		document.getElementById("answer").innerHTML = '<button id="yes" onclick="yes()">Yes</button><button id="no" onclick="no()">No</button> ';
+		document.getElementById("answer").innerHTML = '<button id="yes"  onclick="yes()">Yes</button><button id="no" onclick="no()">No</button> ';
 }
 
 function changeThisCard(id) {

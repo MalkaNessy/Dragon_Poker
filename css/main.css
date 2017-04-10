@@ -222,7 +222,7 @@ button {
 	display: inline-block;
 	padding: 4px;
 	width: 77px;
-	height: 100px;
+	height: 104px;
 	background-color: #004800;
 }
 .cards li img {
@@ -239,7 +239,7 @@ button {
 }
 
 #toBet {
- width: 35px;
+ width: 34px;
  padding-left: 6px; 
  padding-right:6px; 
 }
