@@ -1,3 +1,4 @@
+
 var score;
 var bet =0;
 var message;
@@ -26,11 +27,20 @@ function setScore(newScore) {
 //берет ставку, введенную игроком, показывает ставку, меняет сумму счета и показывает ее, убирает кнопку "сделать ставку"
 function setBet() {
 	bet = document.getElementById("toBet").value;
-	document.getElementById("toBet").value = "";
-	document.getElementById("innerBet").innerHTML = bet;
-	document.getElementById("setBet").style.display = "none";
-	bet = parseInt(bet);
-	setScore((score - bet));
+	console.log('bet: ' + bet + ' inNaN: '+ isNaN(bet));
+	if(isNormalInteger(bet)){
+		
+		document.getElementById("toBet").value = "";
+		document.getElementById("innerBet").innerHTML = bet;
+		document.getElementById("setBet").style.display = "none";
+		bet = parseInt(bet);
+		setScore((score - bet));
+	}
+}
+
+function isNormalInteger(str) {
+    var n = Math.floor(Number(str));
+    return String(n) === str && n >= 0;
 }
 
 //возвращает случайное число в заданном промежутке
@@ -44,8 +54,10 @@ function setMessage(newMessage) {
 	document.getElementById("talk").innerHTML = message+"";
 }
 
-setScore(50);
-setMessage("Hello, wellcome to game!</br>Click the card deck to start the game ");
+
+
+
+
 
 
 //берет случайную карту из колоды, удаляет ее из колоды, возвращает карту
@@ -192,7 +204,7 @@ function getSum(hand) {
 
 //запрос игроку, желает ли он поменять карты; создает кнопку "к подсчету очков"
 function askToChange (){
-		setMessage(" Вы заменили " + count + " карт, и можете заменить еще " + less +". </br>Кликните на карту, которую хотите заменить");
+		setMessage(" You've changed " + count + " cards, " + less +" left. </br>Click on the card you whant to change, or 'to score' button");
 		document.getElementById("answer").innerHTML = '<button id="no" onclick="no()">to score</button> ';
 }
 
@@ -228,7 +240,8 @@ function toChangeCard (id ){
 //вызывается, если игрок больше не хочет менять карты. Отрисовывает все карты дилера и вызывает функцию подсчета очков	
 function no(){
 	
-	document.getElementById("answer").innerHTML = '';
+	//document.getElementById("answer").innerHTML = '';
+	$("#answer").html(''); 
 	//показываем все карты диллера
 	drawHandView_ul(dealer, dealer_ul);
 	//проверяем счет
@@ -268,7 +281,17 @@ function checkScore (){
 			
 }
 
+$(document).ready(function(){
+	setScore(50);
+	setMessage("Hello, wellcome to game!</br>Click the card deck to start the game ");
 
+
+	
+	
+	
+	
+	
+});
 
 		
 		
