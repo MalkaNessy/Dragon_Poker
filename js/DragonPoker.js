@@ -247,6 +247,46 @@ function no(){
 	//проверяем счет
 	checkScore();
 }	
+
+/////////******************* факторы ******************////////
+
+var now = new Date();
+
+//сегодняшнее число
+var today_date = now.getDate();
+//сегодняшний день недели
+var today_weekday = now.getDay(); //результат будет числом от 0(воскресенье) до 6(суббота).
+
+//четное ли число
+var isEven = function(someNumber) {
+  return (someNumber % 2 == 0) ? true : false;
+};
+
+// полная колода
+desk = [ ['6d', '6_d.jpg'], ['7d', '7_d.jpg'], ['8d', '8_d.jpg'], ['9d', '9_d.jpg'], ['A_d', 'ace_d.jpg'], ['J_d', 'j_d.jpg'], ['Q_d', 'q_d.jpg'], ['K_d', 'k_d.jpg'],
+['6h', '6_h.jpg'], ['7h', '7_h.jpg'], ['8h', '8_h.jpg'], ['9h', '9_h.jpg'], ['A_h', 'ace_h.jpg'], ['J_h', 'j_h.jpg'], ['Q_h', 'q_h.jpg'], ['K_h', 'k_h.jpg'],
+['6c', '6_c.jpg'], ['7c', '7_c.jpg'], ['8c', '8_c.jpg'], ['9c', '9_c.jpg'], ['A_c', 'ace_c.jpg'], ['J_c', 'j_c.jpg'], ['Q_c', 'q_c.jpg'], ['K_c', 'k_c.jpg'],
+['6s', '6_s.jpg'], ['7s', '7_s.jpg'], ['8s', '8_s.jpg'], ['9s', '9_s.jpg'], ['A_s', 'ace_s.jpg'], ['J_s', 'j_s.jpg'], ['Q_s', 'q_s.jpg'], ['K_s', 'k_s.jpg'],
+];
+var fcards = desk.slice(0, 8);
+//var cards1 = ['6', '7', '8', '9', 'J', 'Q', 'K', 'A'];
+
+var getFactors = function (){
+	console.log ('getFactors start ' );
+	for (var i=0; i<fcards.length; i++) {
+		var card = fcards[i];
+		console.log("card: " + card);
+		console.log("card[0]: " + card[0]);
+		if (card[0].substring(0,1)=='K') {
+			card[0]=card[0].replace("K", "1");
+			console.log("card[0] new: " + card[0]);
+		}
+	}
+	console.log( fcards);
+}
+
+
+
 	
 //посчитать результат	
 function checkScore (){
@@ -287,10 +327,10 @@ $(document).ready(function(){
 	
 	var $btn = $('<img src="img/btn.jpg">'); // create close-button
 	
-	var message = "ffffffff";
+	var message = "message";
 	var rules ="rules";
 	var factors = "factors ";
-	var today = "today ";
+	var today = "how po play today ";
 	var about = "about us  ";
 	
 	var menu_list = {"rules":rules, "factors":factors, "today":today, "about":about};
