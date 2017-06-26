@@ -7,11 +7,15 @@ var player;
 var count = 0;
 var less = 5;
 var ifChange = false;
+
+// полная колода
 var desk = [ ['6d', '6_d.jpg'], ['7d', '7_d.jpg'], ['8d', '8_d.jpg'], ['9d', '9_d.jpg'], ['A_d', 'ace_d.jpg'], ['J_d', 'j_d.jpg'], ['Q_d', 'q_d.jpg'], ['K_d', 'k_d.jpg'],
 ['6h', '6_h.jpg'], ['7h', '7_h.jpg'], ['8h', '8_h.jpg'], ['9h', '9_h.jpg'], ['A_h', 'ace_h.jpg'], ['J_h', 'j_h.jpg'], ['Q_h', 'q_h.jpg'], ['K_h', 'k_h.jpg'],
 ['6c', '6_c.jpg'], ['7c', '7_c.jpg'], ['8c', '8_c.jpg'], ['9c', '9_c.jpg'], ['A_c', 'ace_c.jpg'], ['J_c', 'j_c.jpg'], ['Q_c', 'q_c.jpg'], ['K_c', 'k_c.jpg'],
 ['6s', '6_s.jpg'], ['7s', '7_s.jpg'], ['8s', '8_s.jpg'], ['9s', '9_s.jpg'], ['A_s', 'ace_s.jpg'], ['J_s', 'j_s.jpg'], ['Q_s', 'q_s.jpg'], ['K_s', 'k_s.jpg'],
 ];
+
+// копия колоды, с которой работаем
 var cards = desk.slice(0);
 //var cards1 = ['6', '7', '8', '9', 'J', 'Q', 'K', 'A'];
 
@@ -38,6 +42,7 @@ function setBet() {
 	}
 }
 
+//проверяет, или в поле "ставка" введено число
 function isNormalInteger(str) {
     var n = Math.floor(Number(str));
     return String(n) === str && n >= 0;
@@ -53,11 +58,6 @@ function setMessage(newMessage) {
 	message = newMessage;
 	document.getElementById("talk").innerHTML = message+"";
 }
-
-
-
-
-
 
 
 //берет случайную карту из колоды, удаляет ее из колоды, возвращает карту
@@ -248,7 +248,7 @@ function no(){
 	checkScore();
 }	
 	
-	
+//посчитать результат	
 function checkScore (){
 	
 	//удаляем кнопку
@@ -284,12 +284,40 @@ function checkScore (){
 $(document).ready(function(){
 	setScore(50);
 	setMessage("Hello, wellcome to game!</br>Click the card deck to start the game ");
-
-
 	
+	var $btn = $('<img src="img/btn.jpg">'); // create close-button
 	
+	var message = "ffffffff";
+	var rules ="rules";
+	var factors = "factors ";
+	var today = "today ";
+	var about = "about us  ";
 	
+	var menu_list = {"rules":rules, "factors":factors, "today":today, "about":about};
 	
+	var $text = $('<div class="text">'+ message+'</div>'); //create text-window
+	
+	//$($text).prepend($btn); //add close btn
+	$("#overlay").prepend($btn);
+	$("#overlay").append($text); //Add text-window to overlay
+	
+	//Show the overlay.
+	$("#nav li ").click(function(){
+		console.log ("clicked on nav.li id: " + this.id);
+		message = menu_list[this.id];
+		console.log ("message = " + message);
+				
+		$text.html(message);
+		//$text.prepend($btn);
+		
+		console.log ("$text = " + $text);
+		$("#overlay").show();
+	});
+	
+	$("#overlay img").click(function(){
+		//Hide the overlay
+		$("#overlay").hide();
+	});
 	
 });
 

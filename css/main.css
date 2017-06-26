@@ -117,6 +117,41 @@ NAVIGATION
   text-decoration: underline;
 }
 
+#overlay {
+	display:none;
+	position:absolute;
+  
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -45%);
+	background-color: white;	
+	
+}
+.text {
+	width: 850px;
+	min-height: 400px;
+	background-color: white;
+	/* border: 3px solid red; */
+	text-align: left;
+	position: relative;
+	color: #002800;
+	line-height: 1.5;
+	padding-left: 15px;
+	padding-right: 15px;
+	margin-top: 25px;
+}
+
+#overlay  img {
+	float: right;
+	width: 25px;
+	height: 25px;
+	
+}
+
+
+
+
+
 /****************************
 TABLE
 *****************************/
