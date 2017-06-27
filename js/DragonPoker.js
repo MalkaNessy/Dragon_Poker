@@ -143,6 +143,10 @@ function drawDealer(hand, ul_id){
 
 //начинаем игру
 function init(){
+	//перемешиваем колоду (с учетом факторов) перед каждой новой раздачей
+	cards = desk.slice(0);
+	cards = getFactors(); //??????????????????????????????????
+	console.log('cards init: ' + cards);
 	if(bet!=0){
 		console.log('init() start');
 		getHand ();
@@ -299,64 +303,6 @@ function forNewBetReady(){
 }
 
 
-
-$(document).ready(function(){
-	setScore(50);
-	setMessage("Hello, wellcome to game!</br>Click the card deck to start the game ");
-	
-	
-	///****** menu ***********///
-	
-	var $btn = $('<img src="img/btn.jpg">'); // create close-button
-	
-	var message = "message";
-	var rules ="rules";
-	var factors = "<h4>Factors that influence on rules</h4><ul><li>Day of week: even or odd<ul><li>if day is even, King is turning to 1 and cost 1 point</li><li>if day is odd, 6 is turning to Princess and cost 10 point</li></ul></li><ul> ";
-	var today = "how po play today ";
-	var about = "about us  ";
-	
-	var menu_list = {"rules":rules, "factors":factors, "today":today, "about":about};
-	
-	var $text = $('<div class="text">'+ message+'</div>'); //create text-window
-	
-	//$($text).prepend($btn); //add close btn
-	$("#overlay").prepend($btn);
-	$("#overlay").append($text); //Add text-window to overlay
-	
-	//Show the overlay.
-	$("#nav li ").click(function(){
-		console.log ("clicked on nav.li id: " + this.id);
-		message = menu_list[this.id];
-		console.log ("message = " + message);
-				
-		$text.html(message);
-		//$text.prepend($btn);
-		
-		console.log ("$text = " + $text);
-		$("#overlay").show();
-	});
-	
-	$("#overlay img").click(function(){
-		//Hide the overlay
-		$("#overlay").hide();
-	});
-	
-	/////////******************* факторы ******************////////
-
-	var now = new Date();
-
-	//сегодняшнее число
-	var today_date = now.getDate();
-	//сегодняшний день недели
-	var today_weekday = now.getDay(); //результат будет числом от 0(воскресенье) до 6(суббота).
-
-	//четное ли число
-	var isEven = function(someNumber) {
-	  return (someNumber % 2 == 0) ? true : false;
-	};
-
-
-
 	var getFactors = function (){
 		console.log ('getFactors start ' );
 		for (var i=0; i<cards.length; i++) {
@@ -379,6 +325,68 @@ $(document).ready(function(){
 		console.log( cards);
 		return cards;
 	}
+	
+	var now = new Date();
+
+	//сегодняшнее число
+	var today_date = now.getDate();
+	//сегодняшний день недели
+	var today_weekday = now.getDay(); //результат будет числом от 0(воскресенье) до 6(суббота).
+
+	
+	
+	
+	//четное ли число
+	var isEven = function(someNumber) {
+		return (someNumber % 2 == 0) ? true : false;
+	};
+	
+	
+	
+	
+$(document).ready(function(){
+	setScore(50);
+	setMessage("Hello, wellcome to game!</br>Click the card deck to start the game ");
+	
+	
+	///****** menu ***********///
+	
+	var $btn = $('<img src="img/btn.jpg">'); // create close-button
+	
+	var message = "message";
+	var rules ="rules";
+	var factors = "<h4>Factors that influence on rules</h4><ul><li>Day of week: even or odd<ul><li>if day is even, King is turning to 1 and cost 1 point</li><li>if day is odd, 6 is turning to Princess and cost 10 point</li></ul></li><ul> ";
+	var today = "how po play today ";
+	var about = "about us  ";
+	
+	var menu_list = {"rules":rules, "factors":factors, "today":today, "about":about};
+	var $text = $('<div class="text">'+ message+'</div>'); //create text-window
+	$("#overlay").prepend($btn); //add close btn
+	$("#overlay").append($text); //Add text-window to overlay
+	//Show the overlay.
+	$("#nav li ").click(function(){
+		console.log ("clicked on nav.li id: " + this.id);
+		message = menu_list[this.id];
+		console.log ("message = " + message);
+				
+		$text.html(message);
+		//$text.prepend($btn);
+		
+		console.log ("$text = " + $text);
+		$("#overlay").show();
+	});
+	
+	$("#overlay img").click(function(){
+		//Hide the overlay
+		$("#overlay").hide();
+	});
+	
+	/////////******************* факторы ******************////////
+
+	
+
+
+
 
 cards = getFactors();
 	
