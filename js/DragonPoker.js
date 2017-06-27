@@ -287,11 +287,18 @@ function checkScore (){
 		setMessage('You loos :( ' );
 	}
 	//console.log ("После подсчета очков - getStatus: " + getStatus() + " player: " + player);
+	forNewBetReady();		
+}
+
+//обновляет поле и возвращает кнопку для новой ставки 
+function forNewBetReady(){
 	bet =0;
 	document.getElementById("toBet").value = "";
 	document.getElementById("innerBet").innerHTML = bet;
-	document.getElementById("setBet").style.display = "block";		
+	document.getElementById("setBet").style.display = "block";
 }
+
+
 
 $(document).ready(function(){
 	setScore(50);
@@ -304,7 +311,7 @@ $(document).ready(function(){
 	
 	var message = "message";
 	var rules ="rules";
-	var factors = "factors ";
+	var factors = "<h4>Factors that influence on rules</h4><ul><li>Day of week: even or odd<ul><li>if day is even, King is turning to 1 and cost 1 point</li><li>if day is odd, 6 is turning to Princess and cost 10 point</li></ul></li><ul> ";
 	var today = "how po play today ";
 	var about = "about us  ";
 	
@@ -356,9 +363,15 @@ $(document).ready(function(){
 			var card = cards[i];
 			console.log("card: " + card);
 			console.log("card[0]: " + card[0]);
-			if (isEven(today_date)){
+			if (isEven(today_weekday)){
 				if (card[0].substring(0,1)=='K') {
 					card[0]=card[0].replace("K", "1");
+					console.log("card[0] new: " + card[0]);
+				}
+			}
+			else {
+				if (card[0].substring(0,1)=='6') {
+					card[0]=card[0].replace("6", "Princess");
 					console.log("card[0] new: " + card[0]);
 				}
 			}
