@@ -328,13 +328,16 @@ function checkScore (){
 			if (isEven(today_weekday)){
 				if (card[0].substring(0,1)=='K') {
 					card[0]=card[0].replace("K", "1");
-					console.log("card[0] new: " + card[0]);
+					weekday_even = "even";
+					console.log("card[0] new: " + card[0] + "weekday_even: " + weekday_even);
+				
 				}
 			}
 			else {
 				if (card[0].substring(0,1)=='6') {
 					card[0]=card[0].replace("6", "Princess");
-					console.log("card[0] new: " + card[0]);
+					weekday_even = "odd";
+					console.log("card[0] new: " + card[0] + "weekday_even: " + weekday_even);
 				}
 			}
 		}
@@ -348,15 +351,12 @@ function checkScore (){
 	var today_date = now.getDate();
 	//сегодняшний день недели
 	var today_weekday = now.getDay(); //результат будет числом от 0(воскресенье) до 6(суббота).
-
-	
-	
-	
 	//четное ли число
 	var isEven = function(someNumber) {
 		return (someNumber % 2 == 0) ? true : false;
 	};
-	
+	//пишет, четное или нечетное
+	var weekday_even = ""; 
 	
 	
 	
@@ -364,6 +364,8 @@ $(document).ready(function(){
 	setScore(50);
 	setMessage("Hello, wellcome to game!</br>Click the card deck to start the game ");
 	
+cards = getFactors();
+console.log ("weekday_even first: " + weekday_even);	
 	
 	///****** menu ***********///
 	
@@ -372,8 +374,8 @@ $(document).ready(function(){
 	var message = "message";
 	var rules ="rules";
 	var factors = "<h4>Factors that influence on rules</h4><ul><li>Day of week: even or odd<ul><li>if day is even, King is turning to 1 and cost 1 point</li><li>if day is odd, 6 is turning to Princess and cost 10 point</li></ul></li><ul> ";
-	var today = "how po play today ";
-	var about = "about us  ";
+	var today = '<h4>Rules for today: </h4><ul><li>day of week:  <span class="today" id="weekday_even">'+weekday_even+'</span></li></ul>';
+	var about = '';
 	
 	var menu_list = {"rules":rules, "factors":factors, "today":today, "about":about};
 	var $text = $('<div class="text">'+ message+'</div>'); //create text-window
@@ -404,8 +406,6 @@ $(document).ready(function(){
 
 
 
-cards = getFactors();
-	
 	
 });
 

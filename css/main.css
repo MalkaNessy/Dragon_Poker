@@ -283,7 +283,10 @@ button {
  display: block;
 }
 
-
+.today {
+	background-color: lightgrey;
+	padding: 2px;
+}
 
 
 /****************************
