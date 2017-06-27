@@ -287,7 +287,10 @@ function checkScore (){
 		setMessage('You loos :( ' );
 	}
 	//console.log ("После подсчета очков - getStatus: " + getStatus() + " player: " + player);
-			
+	bet =0;
+	document.getElementById("toBet").value = "";
+	document.getElementById("innerBet").innerHTML = bet;
+	document.getElementById("setBet").style.display = "block";		
 }
 
 $(document).ready(function(){
