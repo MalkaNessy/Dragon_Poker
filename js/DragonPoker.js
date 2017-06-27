@@ -213,9 +213,15 @@ function getSum(hand) {
 
 //запрос игроку, желает ли он поменять карты; создает кнопку "к подсчету очков"
 function askToChange (){
-		setMessage(" You've changed " + count + " cards, " + less +" left. </br>Click on the card you whant to change, or 'to score' button");
-		document.getElementById("answer").innerHTML = '<button id="no" onclick="no()">to score</button> ';
+	setMessage(" You've changed " + count + " cards, " + less +" left. </br>Click on the card you whant to change, or 'to score' button");
+	document.getElementById("answer").innerHTML = '<button id="no" onclick="no()">to score</button> ';
 }
+
+function allCardsChanged (){
+	setMessage(" You've changed " + count + " cards, " + less +" left. </br>All your cards are changed, click 'to score' button");
+	document.getElementById("answer").innerHTML = '<button id="no" onclick="no()">to score</button> ';		
+}
+
 
 //заменяет одну карту в списке игрока, отрисовывает и выделяет
 function changeThisCard(id) {
@@ -232,6 +238,7 @@ function changeThisCard(id) {
 		console.log('changeThisCard(id)end ');
 		count ++;
 		less --;
+		console.log("count= "+count+ "less= " + less);
 	}
 }
 
@@ -239,9 +246,10 @@ function changeThisCard(id) {
 function toChangeCard (id ){
 		changeThisCard(id);	
 		if (less!==0){
-			askToChange()}
+			askToChange();
+		}
 		else {
-			no();
+			allCardsChanged();
 		}
 		
 }
@@ -257,15 +265,29 @@ function no(){
 	checkScore();
 }	
 
+//обнуляет сумму ставки и возвращает кнопку для новой ставки 
+function forNewBetReady(){
+	bet =0;
+	document.getElementById("toBet").value = "";
+	document.getElementById("innerBet").innerHTML = bet;
+	document.getElementById("setBet").style.display = "block";
+}
 
 
 
-	
+//очищает и возвращает итоговые значения перед следующей раздачей
+function cleaner (){
+	//обнуляем счетчики помененных карт
+	count = 0;
+	less = 5;
+	//удаляем кнопку "to score"
+	document.getElementById("answer").innerHTML = '';
+	forNewBetReady();
+}
+
 //посчитать результат	
 function checkScore (){
 	
-	//удаляем кнопку
-	document.getElementById("answer").innerHTML = '';
 	//проверяем результат
 	var sumDealer = getSum(dealer);
 	var sumPlayer = getSum(player);
@@ -291,16 +313,10 @@ function checkScore (){
 		setMessage('You loos :( ' );
 	}
 	//console.log ("После подсчета очков - getStatus: " + getStatus() + " player: " + player);
-	forNewBetReady();		
+	cleaner ();		
 }
 
-//обновляет поле и возвращает кнопку для новой ставки 
-function forNewBetReady(){
-	bet =0;
-	document.getElementById("toBet").value = "";
-	document.getElementById("innerBet").innerHTML = bet;
-	document.getElementById("setBet").style.display = "block";
-}
+
 
 
 	var getFactors = function (){
