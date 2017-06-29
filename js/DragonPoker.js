@@ -316,6 +316,7 @@ function checkScore (){
 	cleaner ();		
 }
 
+/////////******************* факторы ******************////////
 
 
 
@@ -361,7 +362,7 @@ function checkScore (){
 	
 	
 $(document).ready(function(){
-	setScore(50);
+	setScore(150);
 	setMessage("Hello, wellcome to game!</br>Click the card deck to start the game ");
 	
 cards = getFactors();
@@ -372,12 +373,14 @@ console.log ("weekday_even first: " + weekday_even);
 	var $btn = $('<img src="img/btn.jpg">'); // create close-button
 	
 	var message = "message";
-	var rules ="rules";
+	var rules ="rules" ;
 	var factors = "<h4>Factors that influence on rules</h4><ul><li>Day of week: even or odd<ul><li>if day is even, King is turning to 1 and cost 1 point</li><li>if day is odd, 6 is turning to Princess and cost 10 point</li></ul></li><ul> ";
 	var today = '<h4>Rules for today: </h4><ul><li>day of week:  <span class="today" id="weekday_even">'+weekday_even+'</span></li></ul>';
-	var about = '';
+	var about = '<ul><li><a href="https://github.com/MalkaNessy/Dragon_Poker/tree/master"><h4>My github</h4> </a></li> <li><a href="https://www.linkedin.com/in/malka-korets-3146574a"><h4>My Linkedin</h4></a></li></ul>';
 	
-	var menu_list = {"rules":rules, "factors":factors, "today":today, "about":about};
+	//$( "#rules" ).load( "add/rules.html" );
+	
+	var menu_list = {"rules":rules,"factors":factors, "today":today, "about":about};
 	var $text = $('<div class="text">'+ message+'</div>'); //create text-window
 	$("#overlay").prepend($btn); //add close btn
 	$("#overlay").append($text); //Add text-window to overlay
@@ -386,11 +389,10 @@ console.log ("weekday_even first: " + weekday_even);
 		console.log ("clicked on nav.li id: " + this.id);
 		message = menu_list[this.id];
 		console.log ("message = " + message);
-				
 		$text.html(message);
-		//$text.prepend($btn);
-		
 		console.log ("$text = " + $text);
+		
+		
 		$("#overlay").show();
 	});
 	
@@ -399,13 +401,7 @@ console.log ("weekday_even first: " + weekday_even);
 		$("#overlay").hide();
 	});
 	
-	/////////******************* факторы ******************////////
-
 	
-
-
-
-
 	
 });
 
